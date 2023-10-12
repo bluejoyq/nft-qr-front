@@ -6,6 +6,8 @@ import { createPublicClient, http } from "viem";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { polygon, polygonMumbai } from "viem/chains";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { CssBaseline } from "@mui/material";
+import { Layout } from "./presentation/common/Layout";
 const config = createConfig({
   autoConnect: true,
   publicClient: createPublicClient({
@@ -21,7 +23,11 @@ export const App = (): ReactElement => {
     <>
       <QueryClientProvider client={queryClient}>
         <WagmiConfig config={config}>
-          <RouterProvider router={router} />
+          <Layout>
+            <RouterProvider router={router} />
+          </Layout>
+
+          <CssBaseline />
           <ReactQueryDevtools initialIsOpen={false} />
         </WagmiConfig>
       </QueryClientProvider>

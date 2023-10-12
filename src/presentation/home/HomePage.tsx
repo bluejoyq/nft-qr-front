@@ -1,21 +1,29 @@
 import { ReactElement } from "react";
 
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { alchemy } from "@/data/alchemy";
 import { css } from "@emotion/react";
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { ConnectStep } from "./steps/ConnectStep";
+import { Steps } from "./steps";
+
 export const HomePage = (): ReactElement => {
   const { address } = useAccount();
 
   return (
-    <div>
-      <div>
-        current address: <b>{address}</b>
-      </div>
-      <NftConnector />
-      {address && <OwnerNfts address={address} />}
-    </div>
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            NFT QR Code Generator
+          </Typography>
+          <Typography>{address ? address : "not connected"}</Typography>
+        </Toolbar>
+      </AppBar>
+      {address == null && <ConnectStep />}
+      {address != null && <Steps address={address} />}
+    </>
   );
 };
 
@@ -80,35 +88,5 @@ const OwnerNfts = ({ address }: OwnerNftsProps): ReactElement => {
         })}
       </div>
     </div>
-  );
-};
-
-const NftConnector = (): ReactElement => {
-  const { isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new MetaMaskConnector(),
-  });
-  const { disconnect } = useDisconnect();
-
-  return (
-    <>
-      {isConnected ? (
-        <button
-          onClick={() => {
-            disconnect();
-          }}
-        >
-          disconnect
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            connect();
-          }}
-        >
-          connect
-        </button>
-      )}
-    </>
   );
 };
