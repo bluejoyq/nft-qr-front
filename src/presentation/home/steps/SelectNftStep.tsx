@@ -5,10 +5,11 @@ import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Nft } from "alchemy-sdk";
 import { ReactElement } from "react";
+import { useNftQrFormContext } from "../hooks/useNftQrFormContext";
 
 interface SelectNftStepProps {
   address: string;
-  onNext: (nft: Nft) => void;
+  onNext: () => void;
 }
 export const SelectNftStep = ({
   address,
@@ -22,6 +23,7 @@ export const SelectNftStep = ({
     },
     cacheTime: 1000 * 60 * 5, // 5 minutes
   });
+  const { setValue } = useNftQrFormContext();
 
   return (
     <Box css={pageContentStyles}>
@@ -50,7 +52,8 @@ export const SelectNftStep = ({
               nft={nft}
               key={`${nft.contract.address}/${nft.tokenId}`}
               onClick={() => {
-                onNext(nft);
+                setValue("nft", nft);
+                onNext();
               }}
             />
           );

@@ -1,15 +1,14 @@
-import { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { SelectNftStep } from "./SelectNftStep";
 import { GeneratingStep } from "./GeneratingStep";
-import { Nft } from "alchemy-sdk";
-import { useForm } from "react-hook-form";
-import { Box, Button, TextField, Typography, css } from "@mui/material";
-import { pageContentStyles } from "@/presentation/common/styles";
+import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postQRCode } from "@/data/backend";
 import { ResultStep } from "./ResultStep";
+import { NftQrForm } from "../hooks/useNftQrFormContext";
+import { DataStep } from "./DataStep";
 
-type Step = "selectNft" | "data" | "generating" | "done";
+type Step = "selectNft" | "qrData" | "generating" | "done";
 interface StepsProps {
   address: string;
 }
@@ -17,21 +16,25 @@ interface StepsProps {
 const usePostQrCode = () => {
   return useMutation({
     mutationFn: async (data: NftQrForm) => {
-      const resultImage = await postQRCode(data);
+      console.log(data);
+      const imageUrl = data.nft.rawMetadata?.image;
+      if (imageUrl == null) {
+        throw new Error("NFT does not have metadata");
+      }
+      const resultImage = await postQRCode({
+        imageUrl,
+        qrData: data.qrData,
+      });
       return resultImage;
     },
   });
 };
 
-interface NftQrForm {
-  nft: Nft;
-  data: string;
-}
 export const Steps = ({ address }: StepsProps): ReactElement => {
   const initialStep = "selectNft";
   const [step, setStep] = useState<Step>(initialStep);
-  const { handleSubmit, setValue, watch } = useForm<NftQrForm>();
-
+  const methods = useForm<NftQrForm>();
+  const { handleSubmit, watch } = methods;
   const { mutate, isLoading, data: resultImage } = usePostQrCode();
 
   useEffect(() => {
@@ -47,20 +50,18 @@ export const Steps = ({ address }: StepsProps): ReactElement => {
   };
   const nft = watch("nft");
   return (
-    <>
+    <FormProvider {...methods}>
       {step == "selectNft" && (
         <SelectNftStep
           address={address}
-          onNext={(nft) => {
-            setValue("nft", nft);
-            setStep("data");
+          onNext={() => {
+            setStep("qrData");
           }}
         />
       )}
-      {step == "data" && (
+      {step == "qrData" && (
         <DataStep
-          onNext={(data) => {
-            setValue("data", data);
+          onNext={() => {
             setStep("generating");
             handleSubmit(onSubmit)();
           }}
@@ -70,43 +71,6 @@ export const Steps = ({ address }: StepsProps): ReactElement => {
       {step == "done" && resultImage != null && (
         <ResultStep resultImage={resultImage} nft={nft} />
       )}
-    </>
+    </FormProvider>
   );
 };
-
-interface DataStepProps {
-  onNext: (data: string) => void;
-}
-const DataStep = ({ onNext }: DataStepProps): ReactElement => {
-  const ref = useRef<HTMLInputElement>(null);
-
-  const onButtonClick = () => {
-    if (ref.current == null) {
-      return;
-    }
-    onNext(ref.current.value);
-  };
-  return (
-    <Box css={pageContentStyles}>
-      <Typography variant="h4">Input QR Data</Typography>
-      <Box css={dataContainerStyles}>
-        <TextField
-          inputProps={{
-            maxLength: 50,
-          }}
-          ref={ref}
-          label="Data"
-          placeholder="Enter data to be encoded in QR code"
-        />
-        <Button variant="contained" onClick={onButtonClick}>
-          <Typography>Next</Typography>
-        </Button>
-      </Box>
-    </Box>
-  );
-};
-const dataContainerStyles = css`
-  display: grid;
-  grid-template-columns: 4fr 1fr;
-  column-gap: 10px;
-`;
