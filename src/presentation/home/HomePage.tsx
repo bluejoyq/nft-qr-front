@@ -1,9 +1,8 @@
 import { ReactElement } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { ConnectStep } from "./steps/ConnectStep";
 import { Steps } from "./steps";
 import { AppBar, Box, Button, Toolbar, Typography, css } from "@mui/material";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 
 export const HomePage = (): ReactElement => {
   const { address } = useAccount();
@@ -25,9 +24,6 @@ export const HomePage = (): ReactElement => {
 };
 const NftConnector = (): ReactElement => {
   const { isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new MetaMaskConnector(),
-  });
   const { disconnect } = useDisconnect();
   const { address } = useAccount();
   return (
@@ -45,7 +41,7 @@ const NftConnector = (): ReactElement => {
         </Typography>
       )}
 
-      {isConnected ? (
+      {isConnected && (
         <Button
           onClick={() => {
             disconnect();
@@ -54,16 +50,6 @@ const NftConnector = (): ReactElement => {
           color="error"
         >
           disconnect
-        </Button>
-      ) : (
-        <Button
-          onClick={() => {
-            connect();
-          }}
-          variant="contained"
-          color="success"
-        >
-          connect
         </Button>
       )}
     </Box>

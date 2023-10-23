@@ -1,3 +1,5 @@
+import { NftImage } from "@/presentation/common/components/NftImage";
+import { pageContentStyles } from "@/presentation/common/styles";
 import { css } from "@emotion/react";
 import { Box, Typography } from "@mui/material";
 import { Nft } from "alchemy-sdk";
@@ -12,7 +14,7 @@ export const ResultStep = ({
   nft,
 }: ResultStepProps): ReactElement => {
   return (
-    <Box>
+    <Box css={pageContentStyles}>
       <img
         src={URL.createObjectURL(resultImage)}
         css={css`
@@ -22,13 +24,7 @@ export const ResultStep = ({
       />
 
       <Typography variant="h6">{nft.rawMetadata?.name}</Typography>
-      <img
-        src={nft.rawMetadata?.image}
-        css={css`
-          width: 100%;
-          aspect-ratio: 1;
-        `}
-      />
+      <NftImage nft={nft} />
     </Box>
   );
 };

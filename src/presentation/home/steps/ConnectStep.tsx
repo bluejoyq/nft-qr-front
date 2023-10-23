@@ -1,26 +1,28 @@
 import { pageContentStyles } from "@/presentation/common/styles";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { ReactElement } from "react";
 import { useAccount, useConnect } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 
 export const ConnectStep = (): ReactElement => {
   const { isConnected } = useAccount();
-  const { connect } = useConnect({
+  const { connect, isLoading } = useConnect({
     connector: new MetaMaskConnector(),
   });
   return (
     <Box css={pageContentStyles}>
       {!isConnected && (
-        <Button
+        <LoadingButton
           onClick={() => {
             connect();
           }}
           variant="contained"
           color="primary"
+          loading={isLoading}
         >
           connect
-        </Button>
+        </LoadingButton>
       )}
     </Box>
   );

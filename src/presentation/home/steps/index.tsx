@@ -16,8 +16,10 @@ interface StepsProps {
 const usePostQrCode = () => {
   return useMutation({
     mutationFn: async (data: NftQrForm) => {
-      console.log(data);
-      const imageUrl = data.nft.rawMetadata?.image;
+      const imageUrl = data.nft.rawMetadata?.image?.replace(
+        "ipfs://",
+        "https://ipfs.io/ipfs/"
+      );
       if (imageUrl == null) {
         throw new Error("NFT does not have metadata");
       }
