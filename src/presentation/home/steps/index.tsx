@@ -18,6 +18,10 @@ export const Steps = ({ address }: StepsProps): ReactElement => {
   const [step, setStep] = useState<Step>(initialStep);
   const methods = useForm<NftQrForm>();
 
+  const handleReset = () => {
+    methods.reset();
+    setStep(initialStep);
+  };
   return (
     <FormProvider {...methods}>
       <form>
@@ -38,7 +42,7 @@ export const Steps = ({ address }: StepsProps): ReactElement => {
               }}
             />
           )}
-          {step == "Result" && <ResultStep />}
+          {step == "Result" && <ResultStep handleReset={handleReset} />}
         </Box>
       </form>
     </FormProvider>

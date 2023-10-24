@@ -14,7 +14,10 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { ErrorBoundary } from "react-error-boundary";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
 
-export const ResultStep = (): ReactElement => {
+interface ResultStepProps {
+  handleReset: () => void;
+}
+export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
   const { watch, getValues } = useNftQrFormContext();
   const {
     mutate,
@@ -56,6 +59,7 @@ export const ResultStep = (): ReactElement => {
             resultImage={resultImage}
             error={error}
             isPending={isPending}
+            handleReset={handleReset}
           />
         </ErrorBoundary>
       )}
@@ -67,8 +71,14 @@ interface ResultProps {
   resultImage: Blob | undefined;
   error: Error | null;
   isPending: boolean;
+  handleReset: () => void;
 }
-const Result = ({ resultImage, error, isPending }: ResultProps) => {
+const Result = ({
+  resultImage,
+  error,
+  isPending,
+  handleReset,
+}: ResultProps) => {
   if (error) {
     throw error;
   }
@@ -96,16 +106,24 @@ const Result = ({ resultImage, error, isPending }: ResultProps) => {
   }
   return (
     <Box>
-      <img
-        src={URL.createObjectURL(resultImage)}
-        css={css`
-          width: 100%;
-          aspect-ratio: 1;
-        `}
-      />
-      <IconButton onClick={() => handleDownload(resultImage)}>
-        <DownloadIcon />
-      </IconButton>
+      <Box>
+        <img
+          src={URL.createObjectURL(resultImage)}
+          css={css`
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+          `}
+        />
+      </Box>
+      <Box>
+        <Button onClick={handleReset}>
+          <Typography variant="h5">Restart</Typography>
+        </Button>
+        <IconButton onClick={() => handleDownload(resultImage)}>
+          <DownloadIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
