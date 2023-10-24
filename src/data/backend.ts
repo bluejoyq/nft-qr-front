@@ -1,3 +1,4 @@
+import axios from "axios";
 export interface PostQRCodeProps {
   qrData: string;
   imageUrl: string;
@@ -20,4 +21,14 @@ export const postQRCode = async ({
   });
   const result = await res.blob();
   return result;
+};
+
+export const getHealth = async (): Promise<void> => {
+  try {
+    await axios.get(`${BASE_URL}/health`, {
+      timeout: 1000,
+    });
+  } catch {
+    throw new Error("Server is not running");
+  }
 };

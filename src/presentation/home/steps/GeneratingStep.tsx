@@ -1,10 +1,15 @@
-import { pageContentStyles } from "@/presentation/common/styles";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, css } from "@mui/material";
 import { ReactElement } from "react";
 
 export const GeneratingStep = (): ReactElement => {
   return (
-    <Box css={pageContentStyles}>
+    <Box
+      css={css`
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      `}
+    >
       <CircularProgress />
     </Box>
   );
