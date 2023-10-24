@@ -16,7 +16,8 @@ export const NftImage = ({ nft }: NftImageProps): ReactElement => {
       alt={nft.title}
       css={css`
         width: 100%;
-        height: 100%;
+        max-width: 300px;
+        aspect-ratio: 1;
         object-fit: cover;
       `}
     />

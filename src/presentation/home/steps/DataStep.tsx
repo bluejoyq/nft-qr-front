@@ -1,17 +1,18 @@
-import { pageContentStyles } from "@/presentation/common/styles";
 import { css } from "@emotion/react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { ReactElement } from "react";
 import { useNftQrFormContext } from "../hooks/useNftQrFormContext";
+import { NftPreview } from "@/presentation/common/components/NftPreview";
 
 interface DataStepProps {
   onNext: () => void;
 }
 export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
-  const { register } = useNftQrFormContext();
+  const { register, watch } = useNftQrFormContext();
+  const nft = watch("nft");
   return (
-    <Box css={pageContentStyles}>
-      <Typography variant="h4">Input QR Data</Typography>
+    <>
+      <NftPreview nft={nft} />
       <Box css={dataContainerStyles}>
         <TextField
           inputProps={{
@@ -28,7 +29,7 @@ export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
           <Typography>Next</Typography>
         </Button>
       </Box>
-    </Box>
+    </>
   );
 };
 const dataContainerStyles = css`

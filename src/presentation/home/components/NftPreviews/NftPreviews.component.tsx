@@ -1,6 +1,6 @@
 import { getAlchemy } from "@/data/alchemy";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Network } from "alchemy-sdk";
 import { ReactElement } from "react";
@@ -32,14 +32,15 @@ const NftPreviewsComponent = ({
     <Box css={nftPreviewBoxStyles}>
       {data?.ownedNfts.map((nft) => {
         return (
-          <NftPreview
-            nft={nft}
-            key={`${nft.contract.address}/${nft.tokenId}`}
+          <Button
             onClick={() => {
               setValue("nft", nft);
               onNext();
             }}
-          />
+            key={`${nft.contract.address}/${nft.tokenId}`}
+          >
+            <NftPreview nft={nft} />
+          </Button>
         );
       })}
     </Box>

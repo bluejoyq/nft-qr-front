@@ -1,6 +1,3 @@
-import { pageContentStyles } from "@/presentation/common/styles";
-import { css } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { Network } from "alchemy-sdk";
 import { ReactElement, Suspense, useState } from "react";
@@ -21,19 +18,8 @@ export const SelectNftStep = ({
   const [network, setNetwork] = useState<Network>(Network.ETH_MAINNET);
 
   return (
-    <Box css={pageContentStyles}>
-      <Box
-        css={css`
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 4px;
-        `}
-      >
-        <Typography variant="h4">Select NFT</Typography>
-        <NetworkSelect network={network} onNetworkChange={setNetwork} />
-      </Box>
-
+    <>
+      <NetworkSelect network={network} onNetworkChange={setNetwork} />
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary onReset={reset} fallbackRender={AppError}>
@@ -47,6 +33,6 @@ export const SelectNftStep = ({
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>
-    </Box>
+    </>
   );
 };

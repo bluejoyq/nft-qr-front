@@ -1,18 +1,17 @@
 import { css } from "@emotion/react";
-import { Button, Skeleton, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { Nft } from "alchemy-sdk";
 import { NftImage } from "./NftImage";
 
 interface NftPreviewProps {
   nft: Nft;
-  onClick: () => void;
 }
-export const NftPreview = ({ nft, onClick }: NftPreviewProps) => {
+export const NftPreview = ({ nft }: NftPreviewProps) => {
   return (
-    <Button css={nftPreviewStyles} onClick={onClick}>
+    <Box css={nftPreviewStyles}>
       <NftImage nft={nft} />
-      <Typography>{nft.title}</Typography>
-    </Button>
+      <Typography variant="h6">{nft.title}</Typography>
+    </Box>
   );
 };
 
@@ -21,7 +20,6 @@ export const NftPreviewSkeleton = () => {
 };
 
 const nftPreviewStyles = css`
-  aspect-ratio: 1;
   width: 100%;
   height: 100%;
   display: flex;
