@@ -7,16 +7,16 @@ import { ReactElement } from "react";
 import { useNftQrFormContext } from "../../hooks/useNftQrFormContext";
 import { nftPreviewBoxStyles } from "./NftPreviews.styles";
 
-interface NftPreviewsProps {
+interface NftPreviewsComponentProps {
   network: Network;
   address: string;
   onNext: () => void;
 }
-export const NftPreviews = ({
+const NftPreviewsComponent = ({
   network,
   address,
   onNext,
-}: NftPreviewsProps): ReactElement => {
+}: NftPreviewsComponentProps): ReactElement => {
   const { data } = useSuspenseQuery({
     queryKey: ["nfts", address, network],
     queryFn: async () => {
@@ -45,3 +45,5 @@ export const NftPreviews = ({
     </Box>
   );
 };
+
+export default NftPreviewsComponent;

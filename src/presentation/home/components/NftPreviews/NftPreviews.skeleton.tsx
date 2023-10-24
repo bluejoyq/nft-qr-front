@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { ReactElement } from "react";
 import { nftPreviewBoxStyles } from "./NftPreviews.styles";
 
-export const NftPreviewsSkeleton = (): ReactElement => {
+const NftPreviewsSkeleton = (): ReactElement => {
   return (
     <Box css={nftPreviewBoxStyles}>
       {new Array(9).fill(0).map((_, index) => (
@@ -12,3 +12,5 @@ export const NftPreviewsSkeleton = (): ReactElement => {
     </Box>
   );
 };
+
+export default NftPreviewsSkeleton;

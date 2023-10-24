@@ -7,8 +7,7 @@ import { ReactElement, Suspense, useState } from "react";
 import { NetworkSelect } from "@/presentation/common/components/NetworkSelect";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
-import { NftPreviews } from "../components/NftPreviews/NftPreviews";
-import { NftPreviewsSkeleton } from "../components/NftPreviews/NftPreviews.skeleton";
+import { NftPreviews } from "../components/NftPreviews";
 
 interface SelectNftStepProps {
   address: string;
@@ -38,8 +37,8 @@ export const SelectNftStep = ({
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ErrorBoundary onReset={reset} fallbackRender={AppError}>
-            <Suspense fallback={<NftPreviewsSkeleton />}>
-              <NftPreviews
+            <Suspense fallback={<NftPreviews.Skeleton />}>
+              <NftPreviews.Component
                 network={network}
                 address={address}
                 onNext={onNext}
