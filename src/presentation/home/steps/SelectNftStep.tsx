@@ -36,6 +36,7 @@ export const SelectNftStep = ({
           display: flex;
           flex-direction: row;
           align-items: center;
+          gap: 4px;
         `}
       >
         <Typography variant="h4">Select NFT</Typography>
