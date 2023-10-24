@@ -9,20 +9,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Layout } from "./presentation/common/Layout";
 import { green, orange } from "@mui/material/colors";
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
-});
+const queryClient = new QueryClient();
 const config = createConfig({
   autoConnect: true,
   publicClient: createPublicClient({
     chain: import.meta.env.DEV ? polygonMumbai : polygon,
     transport: http(),
   }),
-  queryClient: queryClient,
 });
 
 const theme = createTheme({

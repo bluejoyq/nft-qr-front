@@ -8,23 +8,25 @@ import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 
 export const ConnectStep = (): ReactElement => {
-  const { reset } = useConnect({
+  const { reset, connect, isLoading, error } = useConnect({
     connector: new MetaMaskConnector(),
   });
   return (
     <Box css={pageContentStyles}>
       <ErrorBoundary onReset={reset} fallbackRender={AppError}>
-        <ConnectButton />
+        <ConnectButton connect={connect} isLoading={isLoading} error={error} />
       </ErrorBoundary>
     </Box>
   );
 };
 
-const ConnectButton = () => {
+interface ConnectButtonProps {
+  connect: () => void;
+  isLoading: boolean;
+  error: Error | null;
+}
+const ConnectButton = ({ connect, isLoading, error }: ConnectButtonProps) => {
   const { isConnected } = useAccount();
-  const { connect, isLoading, error } = useConnect({
-    connector: new MetaMaskConnector(),
-  });
 
   if (error) {
     throw error;
