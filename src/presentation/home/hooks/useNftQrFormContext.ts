@@ -8,4 +8,5 @@ export const useNftQrFormContext = () => {
 export interface NftQrForm {
   nft: Nft;
   qrData: string;
+  address: string;
 }
