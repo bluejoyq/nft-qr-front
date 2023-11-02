@@ -6,6 +6,8 @@ import { useAccount, useConnect } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
+import { analytics } from "@/data/firebase";
+import { logEvent } from "firebase/analytics";
 
 export const ConnectStep = (): ReactElement => {
   const { reset, connect, isLoading, error } = useConnect({
@@ -37,6 +39,7 @@ const ConnectButton = ({ connect, isLoading, error }: ConnectButtonProps) => {
     <LoadingButton
       onClick={() => {
         connect();
+        logEvent(analytics, "connect");
       }}
       variant="contained"
       color="primary"

@@ -13,6 +13,8 @@ import { AppError } from "@/presentation/common/components/AppError";
 import DownloadIcon from "@mui/icons-material/Download";
 import { ErrorBoundary } from "react-error-boundary";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "@/data/firebase";
 
 interface ResultStepProps {
   handleReset: () => void;
@@ -48,6 +50,7 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
         <Button
           onClick={async () => {
             mutate(getValues());
+            logEvent(analytics, "generate");
           }}
           variant="contained"
         >

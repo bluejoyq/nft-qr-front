@@ -5,6 +5,8 @@ import { NetworkSelect } from "@/presentation/common/components/NetworkSelect";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { NftPreviews } from "../components/NftPreviews";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "@/data/firebase";
 
 interface SelectNftStepProps {
   address: string;
@@ -27,7 +29,10 @@ export const SelectNftStep = ({
               <NftPreviews.Component
                 network={network}
                 address={address}
-                onNext={onNext}
+                onNext={() => {
+                  onNext();
+                  logEvent(analytics, "selectNft");
+                }}
               />
             </Suspense>
           </ErrorBoundary>
