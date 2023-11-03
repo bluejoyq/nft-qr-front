@@ -6,9 +6,13 @@ import { createPublicClient, http } from "viem";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { polygon, polygonMumbai } from "viem/chains";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import {
+  CssBaseline,
+  ThemeProvider,
+  extendTheme,
+  CssVarsProvider,
+} from "@mui/joy";
 import { Layout } from "./presentation/common/Layout";
-import { green, orange } from "@mui/material/colors";
 const queryClient = new QueryClient();
 const config = createConfig({
   autoConnect: true,
@@ -18,30 +22,23 @@ const config = createConfig({
   }),
 });
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: orange[500],
-    },
-    secondary: {
-      main: green[500],
-    },
-  },
-});
+const theme = extendTheme();
 export const App = (): ReactElement => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <WagmiConfig config={config}>
-            <Layout>
-              <RouterProvider router={router} />
-            </Layout>
+        <CssVarsProvider defaultMode="dark">
+          <QueryClientProvider client={queryClient}>
+            <WagmiConfig config={config}>
+              <Layout>
+                <RouterProvider router={router} />
+              </Layout>
 
-            <CssBaseline />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </WagmiConfig>
-        </QueryClientProvider>
+              <CssBaseline />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </WagmiConfig>
+          </QueryClientProvider>
+        </CssVarsProvider>
       </ThemeProvider>
     </>
   );

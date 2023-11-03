@@ -1,11 +1,5 @@
 import { css } from "@emotion/react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  Typography,
-} from "@mui/material";
+
 import { ReactElement } from "react";
 import { usePostQrCode } from "../hooks/usePostQrCode";
 import { useNftQrFormContext } from "../hooks/useNftQrFormContext";
@@ -15,6 +9,13 @@ import { ErrorBoundary } from "react-error-boundary";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "@/data/firebase";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  Typography,
+} from "@mui/joy";
 
 interface ResultStepProps {
   handleReset: () => void;
@@ -52,7 +53,6 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
             mutate(getValues());
             logEvent(analytics, "generate");
           }}
-          variant="contained"
         >
           Generate
         </Button>
@@ -121,7 +121,7 @@ const Result = ({
       </Box>
       <Box>
         <Button onClick={handleReset}>
-          <Typography variant="h5">Restart</Typography>
+          <Typography typography="h5">Restart</Typography>
         </Button>
         <IconButton onClick={() => handleDownload(resultImage)}>
           <DownloadIcon />

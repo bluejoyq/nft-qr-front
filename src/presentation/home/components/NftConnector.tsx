@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/joy";
 import { ReactElement } from "react";
 
 export const NftConnector = ({

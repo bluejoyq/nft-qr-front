@@ -1,5 +1,5 @@
 import { NftPreviewSkeleton } from "@/presentation/common/components/NftPreview";
-import { Box } from "@mui/material";
+import { Box } from "@mui/joy";
 import { ReactElement } from "react";
 import { nftPreviewBoxStyles } from "./NftPreviews.styles";
 

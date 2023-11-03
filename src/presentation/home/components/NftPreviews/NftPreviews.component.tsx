@@ -1,6 +1,6 @@
 import { getAlchemy } from "@/data/alchemy";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
-import { Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/joy";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Network } from "alchemy-sdk";
 import { ReactElement } from "react";

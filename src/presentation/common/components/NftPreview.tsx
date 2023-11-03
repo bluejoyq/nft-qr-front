@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/joy";
 import { Nft } from "alchemy-sdk";
 import { NftImage } from "./NftImage";
 
@@ -10,7 +10,7 @@ export const NftPreview = ({ nft }: NftPreviewProps) => {
   return (
     <Box css={nftPreviewStyles}>
       <NftImage nft={nft} />
-      <Typography variant="h6">{nft.title}</Typography>
+      <Typography typography="h6">{nft.title}</Typography>
     </Box>
   );
 };

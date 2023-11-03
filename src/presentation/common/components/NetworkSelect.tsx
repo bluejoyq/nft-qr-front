@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-} from "@mui/material";
+import { FormControl, Select, Option } from "@mui/joy";
 import { Network } from "alchemy-sdk";
 import { ReactElement } from "react";
 
@@ -16,26 +10,19 @@ export const NetworkSelect = ({
   onNetworkChange,
   network,
 }: NetworkSelectProps): ReactElement => {
-  const handleChange = (event: SelectChangeEvent<Network>) => {
-    const newNetwork = event.target.value as Network;
+  const handleChange = (_: any, newNetwork: Network | null) => {
+    if (!newNetwork) return;
     onNetworkChange(newNetwork);
   };
   return (
     <FormControl>
-      <InputLabel id="network-select-label">Network</InputLabel>
-      <Select
-        labelId="network-select-label"
-        id="network-select"
-        value={network}
-        label={"Network"}
-        onChange={handleChange}
-      >
+      <Select placeholder="Network" value={network} onChange={handleChange}>
         {Object.keys(Network).map((key) => {
           const value = Network[key as keyof typeof Network];
           return (
-            <MenuItem key={key} value={value}>
+            <Option key={key} value={value}>
               {value}
-            </MenuItem>
+            </Option>
           );
         })}
       </Select>

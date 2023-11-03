@@ -1,10 +1,10 @@
-import { Alert, AlertTitle, Button } from "@mui/material";
+import { Alert, Button, Typography } from "@mui/joy";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { FallbackProps } from "react-error-boundary";
 export const AppError = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
-    <Alert severity="error">
-      <AlertTitle>Error:</AlertTitle>
+    <Alert color="danger">
+      <Typography>Error:</Typography>
       {error.message}
       <Button onClick={resetErrorBoundary} color="success">
         <RestartAltIcon />

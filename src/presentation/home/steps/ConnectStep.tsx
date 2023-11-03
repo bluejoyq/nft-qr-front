@@ -1,6 +1,5 @@
 import { pageContentStyles } from "@/presentation/common/styles";
-import { Box, Button, TextField, Typography, css } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { Box, Button, Input, Typography } from "@mui/joy";
 import { ReactElement, useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -8,6 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { analytics } from "@/data/firebase";
 import { logEvent } from "firebase/analytics";
+import { css } from "@emotion/react";
 
 interface ConnectStepProps {
   onNext: (address: string) => void;
@@ -41,12 +41,12 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
           gap: 16px;
         `}
       >
-        <TextField
-          label={"EVM address"}
+        <Input
+          placeholder={"EVM address"}
           onChange={(e) => setVal(e.target.value)}
           value={val}
         />
-        <Button variant="contained" color="primary" onClick={() => onNext(val)}>
+        <Button color="primary" onClick={() => onNext(val)}>
           enter
         </Button>
       </Box>
@@ -68,16 +68,15 @@ const ConnectButton = ({ connect, isLoading, error }: ConnectButtonProps) => {
   if (isConnected) return null;
 
   return (
-    <LoadingButton
+    <Button
       onClick={() => {
         connect();
         logEvent(analytics, "connect");
       }}
-      variant="contained"
       color="primary"
       loading={isLoading}
     >
       connect with metamask
-    </LoadingButton>
+    </Button>
   );
 };
