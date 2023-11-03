@@ -11,8 +11,7 @@ import {
 } from "@/presentation/common/styles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { ConnectStep } from "./ConnectStep";
-import { NftConnector } from "../components/NftConnector";
-import { Box, IconButton, Typography } from "@mui/joy";
+import { Box, IconButton, Link, Typography } from "@mui/joy";
 export type Step = "Get Address" | "Select Nft" | "Input QR Data" | "Result";
 
 export const Steps = (): ReactElement => {
@@ -30,7 +29,6 @@ export const Steps = (): ReactElement => {
     <FormProvider {...methods}>
       <Box position="static" css={pagePaddingStyles}>
         <StepsHeader step={step} setStep={setStep} />
-        <NftConnector address={address} />
       </Box>
       <form>
         <Box css={pageContentStyles}>
@@ -60,6 +58,7 @@ export const Steps = (): ReactElement => {
           {step == "Result" && <ResultStep handleReset={handleReset} />}
         </Box>
       </form>
+      <StepsFooter />
     </FormProvider>
   );
 };
@@ -84,7 +83,20 @@ const StepsHeader = ({
     }
   };
 
+  const handleBack = () => {
+    switch (step) {
+      case "Get Address":
+        return;
+      case "Select Nft":
+        return setStep("Get Address");
+      case "Input QR Data":
+        return setStep("Select Nft");
+      case "Result":
+        return setStep("Input QR Data");
+    }
+  };
   const currentStepIndex = stepToIndex(step);
+
   return (
     <Box
       css={css`
@@ -130,14 +142,41 @@ const StepsHeader = ({
             align-items: center;
           `}
         >
-          {step === "Input QR Data" && (
-            <IconButton onClick={() => setStep("Select Nft")}>
+          {step != "Get Address" && (
+            <IconButton onClick={handleBack}>
               <ArrowBackIosIcon />
             </IconButton>
           )}
-          <Typography typography="h4">{step}</Typography>
+          <Typography
+            typography="h4"
+            css={css`
+              width: 100%;
+            `}
+          >
+            step: {currentStepIndex + 1}.{step}
+          </Typography>
         </Box>
       </Box>
+    </Box>
+  );
+};
+
+const StepsFooter = () => {
+  return (
+    <Box
+      css={css`
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      `}
+    >
+      <Typography typography="h6">
+        This service does not require any paid goods or tokens.
+      </Typography>
+      <Link href="https://github.com/bluejoyq">Developer Github</Link>
     </Box>
   );
 };
