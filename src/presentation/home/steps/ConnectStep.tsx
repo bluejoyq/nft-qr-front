@@ -1,4 +1,3 @@
-import { pageContentStyles } from "@/presentation/common/styles";
 import { Box, Button, Input, Typography } from "@mui/joy";
 import { ReactElement, useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
@@ -28,7 +27,13 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
     onNext(address);
   };
   return (
-    <Box css={pageContentStyles}>
+    <Box
+      css={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      `}
+    >
       <ErrorBoundary onReset={reset} fallbackRender={AppError}>
         <ConnectButton connect={connect} isLoading={isLoading} error={error} />
       </ErrorBoundary>

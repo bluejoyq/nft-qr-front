@@ -5,12 +5,15 @@ import { ResultStep } from "./ResultStep";
 import { NftQrForm } from "../hooks/useNftQrFormContext";
 import { DataStep } from "./DataStep";
 import { css } from "@emotion/react";
-import { pageContentStyles } from "@/presentation/common/styles";
+import {
+  pageContentStyles,
+  pagePaddingStyles,
+} from "@/presentation/common/styles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { ConnectStep } from "./ConnectStep";
 import { NftConnector } from "../components/NftConnector";
 import { Box, IconButton, Typography } from "@mui/joy";
-type Step = "Get Address" | "Select Nft" | "Input QR Data" | "Result";
+export type Step = "Get Address" | "Select Nft" | "Input QR Data" | "Result";
 
 export const Steps = (): ReactElement => {
   const initialStep = "Get Address";
@@ -25,12 +28,12 @@ export const Steps = (): ReactElement => {
   const address = methods.watch("address");
   return (
     <FormProvider {...methods}>
-      <Box position="static">
+      <Box position="static" css={pagePaddingStyles}>
+        <StepsHeader step={step} setStep={setStep} />
         <NftConnector address={address} />
       </Box>
       <form>
         <Box css={pageContentStyles}>
-          <StepsHeader step={step} setStep={setStep} />
           {step == "Get Address" && (
             <ConnectStep
               onNext={(address) => {
@@ -68,21 +71,73 @@ const StepsHeader = ({
   step: Step;
   setStep: (step: Step) => void;
 }) => {
+  const stepToIndex = (step: Step) => {
+    switch (step) {
+      case "Get Address":
+        return 0;
+      case "Select Nft":
+        return 1;
+      case "Input QR Data":
+        return 2;
+      case "Result":
+        return 3;
+    }
+  };
+
+  const currentStepIndex = stepToIndex(step);
   return (
     <Box
       css={css`
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         gap: 4px;
       `}
     >
-      {step === "Input QR Data" && (
-        <IconButton onClick={() => setStep("Select Nft")}>
-          <ArrowBackIosIcon />
-        </IconButton>
-      )}
-      <Typography typography="h4">{step}</Typography>
+      <Typography typography="h2">NFT QR Generator</Typography>
+      <Box
+        css={css`
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        `}
+      >
+        <Box
+          css={css`
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+          `}
+        >
+          {new Array(4).fill(0).map((_, index) => {
+            return (
+              <div
+                css={css`
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background-color: ${index <= currentStepIndex
+                    ? "red"
+                    : "white"};
+                `}
+              />
+            );
+          })}
+        </Box>
+        <Box
+          css={css`
+            display: flex;
+            align-items: center;
+          `}
+        >
+          {step === "Input QR Data" && (
+            <IconButton onClick={() => setStep("Select Nft")}>
+              <ArrowBackIosIcon />
+            </IconButton>
+          )}
+          <Typography typography="h4">{step}</Typography>
+        </Box>
+      </Box>
     </Box>
   );
 };

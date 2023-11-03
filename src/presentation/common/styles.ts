@@ -8,3 +8,7 @@ export const pageContentStyles = css`
   flex-direction: column;
   gap: 20px;
 `;
+
+export const pagePaddingStyles = css`
+  padding: 1rem;
+`;
