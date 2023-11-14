@@ -7,6 +7,8 @@ import { AppError } from "@/presentation/common/components/AppError";
 import { NftPreviews } from "../components/NftPreviews";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "@/data/firebase";
+import { Box } from "@mui/joy";
+import { css } from "@emotion/react";
 
 interface SelectNftStepProps {
   address: string;
@@ -20,7 +22,15 @@ export const SelectNftStep = ({
   const [network, setNetwork] = useState<Network>(Network.ETH_MAINNET);
 
   return (
-    <>
+    <Box
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 16px;
+      `}
+    >
       <NetworkSelect network={network} onNetworkChange={setNetwork} />
       <QueryErrorResetBoundary>
         {({ reset }) => (
@@ -38,6 +48,6 @@ export const SelectNftStep = ({
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>
-    </>
+    </Box>
   );
 };

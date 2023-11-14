@@ -6,6 +6,7 @@ import { Network } from "alchemy-sdk";
 import { ReactElement } from "react";
 import { useNftQrFormContext } from "../../hooks/useNftQrFormContext";
 import { nftPreviewBoxStyles } from "./NftPreviews.styles";
+import { css } from "@emotion/react";
 
 interface NftPreviewsComponentProps {
   network: Network;
@@ -37,7 +38,12 @@ const NftPreviewsComponent = ({
               setValue("nft", nft);
               onNext();
             }}
+            variant="plain"
             key={`${nft.contract.address}/${nft.tokenId}`}
+            css={css`
+              border-radius: 8px;
+              padding: 8px;
+            `}
           >
             <NftPreview nft={nft} />
           </Button>
