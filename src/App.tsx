@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { polygon, polygonMumbai } from "viem/chains";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CssBaseline, extendTheme, CssVarsProvider } from "@mui/joy";
-import { Layout } from "./presentation/common/Layout";
 const queryClient = new QueryClient();
 const config = createConfig({
   autoConnect: true,
@@ -29,9 +28,7 @@ export const App = (): ReactElement => {
       >
         <QueryClientProvider client={queryClient}>
           <WagmiConfig config={config}>
-            <Layout>
-              <RouterProvider router={router} />
-            </Layout>
+            <RouterProvider router={router} />
 
             <CssBaseline />
             <ReactQueryDevtools initialIsOpen={false} />

@@ -1,11 +1,10 @@
 import { css } from "@emotion/react";
 import { ReactElement } from "react";
 import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Outlet } from "react-router-dom";
 
-interface LayoutProps {
-  children: ReactElement;
-}
-export const Layout = ({ children }: LayoutProps): ReactElement => {
+export const Layout = (): ReactElement => {
   return (
     <div
       css={css`
@@ -17,7 +16,8 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
         width: 100vw;
       `}
     >
-      {children}
+      <Header />
+      <Outlet />
       <Footer />
     </div>
   );

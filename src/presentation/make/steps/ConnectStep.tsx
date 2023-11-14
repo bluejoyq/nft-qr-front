@@ -7,6 +7,7 @@ import { AppError } from "@/presentation/common/components/AppError";
 import { analytics } from "@/data/firebase";
 import { logEvent } from "firebase/analytics";
 import { css } from "@emotion/react";
+import { AppButton } from "@/presentation/common/components/AppButton";
 
 interface ConnectStepProps {
   onNext: (address: string) => void;
@@ -47,9 +48,9 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
           onChange={(e) => setVal(e.target.value)}
           value={val}
         />
-        <Button color="primary" onClick={() => onNext(val)}>
-          enter
-        </Button>
+        <AppButton color="primary" onClick={() => onNext(val)}>
+          Enter
+        </AppButton>
       </Box>
       <Typography>or</Typography>
       <ErrorBoundary onReset={reset} fallbackRender={AppError}>
@@ -73,7 +74,7 @@ const ConnectButton = ({ connect, isLoading, error }: ConnectButtonProps) => {
   if (isConnected) return null;
 
   return (
-    <Button
+    <AppButton
       onClick={() => {
         connect();
         logEvent(analytics, "connect");
@@ -81,7 +82,7 @@ const ConnectButton = ({ connect, isLoading, error }: ConnectButtonProps) => {
       color="primary"
       loading={isLoading}
     >
-      connect with metamask
-    </Button>
+      Connect with Metamask
+    </AppButton>
   );
 };
