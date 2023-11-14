@@ -30,33 +30,31 @@ export const Steps = (): ReactElement => {
       <Box position="static" css={pagePaddingStyles}>
         <StepsHeader step={step} setStep={setStep} />
       </Box>
-      <form>
-        <Box css={pageContentStyles}>
-          {step == "Get Address" && (
-            <ConnectStep
-              onNext={(address) => {
-                methods.setValue("address", address);
-                setStep("Select Nft");
-              }}
-            />
-          )}
-          {step == "Select Nft" && (
-            <SelectNftStep
-              address={address}
-              onNext={() => {
-                setStep("Input QR Data");
-              }}
-            />
-          )}
-          {step == "Input QR Data" && (
-            <DataStep
-              onNext={() => {
-                setStep("Result");
-              }}
-            />
-          )}
-          {step == "Result" && <ResultStep handleReset={handleReset} />}
-        </Box>
+      <form css={pageContentStyles}>
+        {step == "Get Address" && (
+          <ConnectStep
+            onNext={(address) => {
+              methods.setValue("address", address);
+              setStep("Select Nft");
+            }}
+          />
+        )}
+        {step == "Select Nft" && (
+          <SelectNftStep
+            address={address}
+            onNext={() => {
+              setStep("Input QR Data");
+            }}
+          />
+        )}
+        {step == "Input QR Data" && (
+          <DataStep
+            onNext={() => {
+              setStep("Result");
+            }}
+          />
+        )}
+        {step == "Result" && <ResultStep handleReset={handleReset} />}
       </form>
       <StepsFooter />
     </FormProvider>
