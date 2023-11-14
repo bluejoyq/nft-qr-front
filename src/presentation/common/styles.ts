@@ -5,6 +5,7 @@ export const pageContentStyles = css`
   width: 100%;
   max-width: 1200px;
   display: flex;
+  height: 100%;
   flex-direction: column;
   gap: 20px;
 `;

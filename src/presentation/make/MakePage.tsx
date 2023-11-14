@@ -26,35 +26,37 @@ export const MakePage = (): ReactElement => {
   const address = methods.watch("address");
   return (
     <FormProvider {...methods}>
-      <Box position="static" css={pagePaddingStyles}>
-        <MakePageHeader step={step} setStep={setStep} />
+      <Box css={[pageContentStyles, pagePaddingStyles]}>
+        <Box position="static">
+          <MakePageHeader step={step} setStep={setStep} />
+        </Box>
+        <form>
+          {step == "Get Address" && (
+            <ConnectStep
+              onNext={(address) => {
+                methods.setValue("address", address);
+                setStep("Select Nft");
+              }}
+            />
+          )}
+          {step == "Select Nft" && (
+            <SelectNftStep
+              address={address}
+              onNext={() => {
+                setStep("Input QR Data");
+              }}
+            />
+          )}
+          {step == "Input QR Data" && (
+            <DataStep
+              onNext={() => {
+                setStep("Result");
+              }}
+            />
+          )}
+          {step == "Result" && <ResultStep handleReset={handleReset} />}
+        </form>
       </Box>
-      <form css={pageContentStyles}>
-        {step == "Get Address" && (
-          <ConnectStep
-            onNext={(address) => {
-              methods.setValue("address", address);
-              setStep("Select Nft");
-            }}
-          />
-        )}
-        {step == "Select Nft" && (
-          <SelectNftStep
-            address={address}
-            onNext={() => {
-              setStep("Input QR Data");
-            }}
-          />
-        )}
-        {step == "Input QR Data" && (
-          <DataStep
-            onNext={() => {
-              setStep("Result");
-            }}
-          />
-        )}
-        {step == "Result" && <ResultStep handleReset={handleReset} />}
-      </form>
     </FormProvider>
   );
 };
