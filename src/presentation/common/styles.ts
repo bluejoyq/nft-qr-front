@@ -6,6 +6,7 @@ export const pageContentStyles = css`
   max-width: 1200px;
   display: flex;
   height: 100%;
+  overflow-y: auto;
   flex-direction: column;
   gap: 20px;
 `;
