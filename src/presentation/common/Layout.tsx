@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { ReactElement } from "react";
+import { Footer } from "./components/Footer";
 
 interface LayoutProps {
   children: ReactElement;
@@ -17,6 +18,7 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
       `}
     >
       {children}
+      <Footer />
     </div>
   );
 };

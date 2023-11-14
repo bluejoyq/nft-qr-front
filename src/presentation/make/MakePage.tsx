@@ -11,7 +11,6 @@ import {
 import { ConnectStep } from "./steps/ConnectStep";
 import { Box } from "@mui/joy";
 import { MakePageHeader } from "./components/MakePageHeader";
-import { MakePageFooter } from "./components/MakePageFooter";
 export type Step = "Get Address" | "Select Nft" | "Input QR Data" | "Result";
 
 export const MakePage = (): ReactElement => {
@@ -56,7 +55,6 @@ export const MakePage = (): ReactElement => {
         )}
         {step == "Result" && <ResultStep handleReset={handleReset} />}
       </form>
-      <MakePageFooter />
     </FormProvider>
   );
 };

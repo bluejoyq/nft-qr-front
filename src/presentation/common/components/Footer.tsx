@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { Box, Link, Typography } from "@mui/joy";
 
-export const MakePageFooter = () => {
+export const Footer = () => {
   return (
     <Box
       css={css`
