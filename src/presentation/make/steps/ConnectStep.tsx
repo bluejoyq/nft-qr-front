@@ -34,10 +34,6 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
         gap: 16px;
       `}
     >
-      <ErrorBoundary onReset={reset} fallbackRender={AppError}>
-        <ConnectButton connect={connect} isLoading={isLoading} error={error} />
-      </ErrorBoundary>
-      <Typography>or</Typography>
       <Box
         css={css`
           width: 100%;
@@ -55,6 +51,10 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
           enter
         </Button>
       </Box>
+      <Typography>or</Typography>
+      <ErrorBoundary onReset={reset} fallbackRender={AppError}>
+        <ConnectButton connect={connect} isLoading={isLoading} error={error} />
+      </ErrorBoundary>
     </Box>
   );
 };

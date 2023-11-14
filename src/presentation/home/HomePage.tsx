@@ -1,6 +1,6 @@
+import { Box } from "@mui/joy";
 import { ReactElement } from "react";
-import { Steps } from "./steps";
 
 export const HomePage = (): ReactElement => {
-  return <Steps />;
+  return <Box>a</Box>;
 };
