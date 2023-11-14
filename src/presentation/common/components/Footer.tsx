@@ -1,15 +1,15 @@
 import { css } from "@emotion/react";
 import { Box, Link, Typography } from "@mui/joy";
-import { pageContentStyles } from "../styles";
+import { pageContentStyles, pagePaddingStyles } from "../styles";
 
 export const Footer = () => {
   return (
     <Box
       css={[
         pageContentStyles,
+        pagePaddingStyles,
         css`
-          width: 100%;
-          display: flex;
+          height: 100px;
           flex-direction: column;
           align-items: center;
           justify-content: center;

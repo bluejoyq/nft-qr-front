@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Box, Typography, IconButton } from "@mui/joy";
+import { Box, Typography, IconButton, useTheme } from "@mui/joy";
 import { Step } from "../MakePage";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 export const MakePageHeader = ({
@@ -35,7 +35,7 @@ export const MakePageHeader = ({
     }
   };
   const currentStepIndex = stepToIndex(step);
-
+  const theme = useTheme();
   return (
     <Box
       css={css`
@@ -45,12 +45,11 @@ export const MakePageHeader = ({
         gap: 4px;
       `}
     >
-      <Typography typography="h2">NFT QR Generator</Typography>
       <Box
         css={css`
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 16px;
         `}
       >
         <Box
@@ -68,7 +67,7 @@ export const MakePageHeader = ({
                   height: 10px;
                   border-radius: 50%;
                   background-color: ${index <= currentStepIndex
-                    ? "red"
+                    ? theme.palette.primary[400]
                     : "white"};
                 `}
               />
@@ -87,12 +86,12 @@ export const MakePageHeader = ({
             </IconButton>
           )}
           <Typography
-            typography="h4"
+            typography="h3"
             css={css`
               width: 100%;
             `}
           >
-            step: {currentStepIndex + 1}.{step}
+            Step: {currentStepIndex + 1}. {step}
           </Typography>
         </Box>
       </Box>
