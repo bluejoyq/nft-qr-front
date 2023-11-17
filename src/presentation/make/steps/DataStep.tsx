@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
-import { Box, Typography, Button, Input } from "@mui/joy";
+import { Box, Input } from "@mui/joy";
 import { ReactElement } from "react";
 import { useNftQrFormContext } from "../hooks/useNftQrFormContext";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
+import { AppButton } from "@/presentation/common/components/AppButton";
 
 interface DataStepProps {
   onNext: () => void;
@@ -22,9 +23,7 @@ export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
             maxLength: 50,
           })}
         />
-        <Button onClick={onNext}>
-          <Typography>Next</Typography>
-        </Button>
+        <AppButton onClick={onNext}>Next</AppButton>
       </Box>
     </>
   );

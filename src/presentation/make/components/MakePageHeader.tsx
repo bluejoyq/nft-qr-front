@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
-import { Box, Typography, IconButton, useTheme } from "@mui/joy";
+import { Box, Typography, useTheme } from "@mui/joy";
 import { Step } from "../MakePage";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { AppIconButton } from "@/presentation/common/components/AppButton";
 export const MakePageHeader = ({
   step,
   setStep,
@@ -43,6 +44,7 @@ export const MakePageHeader = ({
         flex-direction: column;
         align-items: center;
         gap: 4px;
+        width: 100%;
       `}
     >
       <Box
@@ -50,12 +52,15 @@ export const MakePageHeader = ({
           display: flex;
           flex-direction: column;
           gap: 16px;
+          align-items: center;
+          width: 100%;
         `}
       >
         <Box
           css={css`
             display: flex;
-            width: 100%;
+            width: 200px;
+            align-items: center;
             justify-content: space-around;
           `}
         >
@@ -78,17 +83,22 @@ export const MakePageHeader = ({
           css={css`
             display: flex;
             align-items: center;
+            gap: 10px;
+            width: 100%;
           `}
         >
           {step != "Get Address" && (
-            <IconButton onClick={handleBack}>
-              <ArrowBackIosIcon />
-            </IconButton>
+            <AppIconButton onClick={handleBack}>
+              <ArrowBackRoundedIcon />
+            </AppIconButton>
           )}
           <Typography
             typography="h3"
             css={css`
               width: 100%;
+              flex: 1;
+              text-align: center;
+              padding-right: 40px;
             `}
           >
             Step: {currentStepIndex + 1}. {step}

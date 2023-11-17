@@ -9,13 +9,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "@/data/firebase";
+import { Alert, Box, CircularProgress, Typography } from "@mui/joy";
 import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  Typography,
-} from "@mui/joy";
+  AppButton,
+  AppIconButton,
+} from "@/presentation/common/components/AppButton";
 
 interface ResultStepProps {
   handleReset: () => void;
@@ -35,27 +33,27 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
 
   const qrData = watch("qrData");
   return (
-    <>
-      <Box
-        css={css`
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-        `}
-      >
-        <NftPreview nft={nft} />
-        <Typography>QR Data : {qrData}</Typography>
-      </Box>
+    <Box
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      `}
+    >
+      <NftPreview nft={nft} />
+      <Alert>
+        QR Data : <Typography typography={"h4"}>{qrData}</Typography>
+      </Alert>
       {isIdle ? (
-        <Button
+        <AppButton
           onClick={async () => {
             mutate(getValues());
             logEvent(analytics, "generate");
           }}
         >
           Generate
-        </Button>
+        </AppButton>
       ) : (
         <ErrorBoundary onReset={reset} fallbackRender={AppError}>
           <Result
@@ -66,7 +64,7 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
           />
         </ErrorBoundary>
       )}
-    </>
+    </Box>
   );
 };
 
@@ -119,13 +117,17 @@ const Result = ({
           `}
         />
       </Box>
-      <Box>
-        <Button onClick={handleReset}>
-          <Typography typography="h5">Restart</Typography>
-        </Button>
-        <IconButton onClick={() => handleDownload(resultImage)}>
+      <Box
+        css={css`
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        `}
+      >
+        <AppButton onClick={handleReset}>Restart</AppButton>
+        <AppIconButton onClick={() => handleDownload(resultImage)}>
           <DownloadIcon />
-        </IconButton>
+        </AppIconButton>
       </Box>
     </Box>
   );

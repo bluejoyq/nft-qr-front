@@ -1,4 +1,4 @@
-import { Box, Button, Input, Typography } from "@mui/joy";
+import { Box, Input, Typography } from "@mui/joy";
 import { ReactElement, useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";

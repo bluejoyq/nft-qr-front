@@ -72,7 +72,6 @@ const NftPreviewsComponent = ({
     network,
     address
   );
-  console.log(data);
   return (
     <Box css={nftPreviewBoxStyles}>
       {data.map((nft) => {
