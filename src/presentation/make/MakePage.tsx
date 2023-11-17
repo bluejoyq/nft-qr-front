@@ -11,7 +11,14 @@ import {
 import { ConnectStep } from "./steps/ConnectStep";
 import { Box } from "@mui/joy";
 import { MakePageHeader } from "./components/MakePageHeader";
-export type Step = "Get Address" | "Select Nft" | "Input QR Data" | "Result";
+import { StyleStep } from "./steps/StyleStep";
+import { css } from "@emotion/react";
+export type Step =
+  | "Get Address"
+  | "Select Nft"
+  | "QR Data"
+  | "Style"
+  | "Result";
 
 export const MakePage = (): ReactElement => {
   const initialStep = "Get Address";
@@ -30,7 +37,12 @@ export const MakePage = (): ReactElement => {
         <Box position="static">
           <MakePageHeader step={step} setStep={setStep} />
         </Box>
-        <form>
+        <form
+          css={css`
+            width: 100%;
+            height: 100%;
+          `}
+        >
           {step == "Get Address" && (
             <ConnectStep
               onNext={(address) => {
@@ -43,12 +55,19 @@ export const MakePage = (): ReactElement => {
             <SelectNftStep
               address={address}
               onNext={() => {
-                setStep("Input QR Data");
+                setStep("QR Data");
               }}
             />
           )}
-          {step == "Input QR Data" && (
+          {step == "QR Data" && (
             <DataStep
+              onNext={() => {
+                setStep("Style");
+              }}
+            />
+          )}
+          {step == "Style" && (
+            <StyleStep
               onNext={() => {
                 setStep("Result");
               }}

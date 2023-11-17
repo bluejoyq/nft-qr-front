@@ -16,10 +16,12 @@ export const MakePageHeader = ({
         return 0;
       case "Select Nft":
         return 1;
-      case "Input QR Data":
+      case "QR Data":
         return 2;
-      case "Result":
+      case "Style":
         return 3;
+      case "Result":
+        return 4;
     }
   };
 
@@ -29,10 +31,12 @@ export const MakePageHeader = ({
         return;
       case "Select Nft":
         return setStep("Get Address");
-      case "Input QR Data":
+      case "QR Data":
         return setStep("Select Nft");
+      case "Style":
+        return setStep("QR Data");
       case "Result":
-        return setStep("Input QR Data");
+        return setStep("Style");
     }
   };
   const currentStepIndex = stepToIndex(step);
@@ -64,7 +68,7 @@ export const MakePageHeader = ({
             justify-content: space-around;
           `}
         >
-          {new Array(4).fill(0).map((_, index) => {
+          {new Array(5).fill(0).map((_, index) => {
             return (
               <div
                 css={css`
