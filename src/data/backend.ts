@@ -1,34 +1,36 @@
-import axios from "axios";
+import { api } from "./fetcher";
 export interface PostQRCodeProps {
   qrData: string;
   imageUrl: string;
-  prompt?: string;
+  addtionalPrompt?: string;
+  address: string;
+  contractAddress: string;
+  tokenId: string;
 }
 
-const BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 export const postQRCode = async ({
   imageUrl,
   qrData,
-  prompt,
+  addtionalPrompt,
+  contractAddress,
+  tokenId,
+  address,
 }: PostQRCodeProps): Promise<Blob> => {
-  const res = await fetch(`${BASE_URL}/qr`, {
-    method: "POST",
-    body: JSON.stringify({
-      image_url: imageUrl,
-      qr_data: qrData,
-      prompt,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const res = await api.post(`/qr`, {
+    image_url: imageUrl,
+    qr_data: qrData,
+    addtional_prompt: addtionalPrompt,
+    contract_address: contractAddress,
+    token_id: tokenId,
+    address,
   });
-  const result = await res.blob();
+  const result = await res.data;
   return result;
 };
 
 export const getHealth = async (): Promise<void> => {
   try {
-    await axios.get(`${BASE_URL}/health`, {
+    await api.get(`/health`, {
       timeout: 1000,
     });
   } catch {

@@ -10,7 +10,7 @@ interface StyleStepProps {
 export const StyleStep = ({ onNext }: StyleStepProps) => {
   const { setValue } = useNftQrFormContext();
   const handleSelectChange = (_: any, val: "realistic" | "static" | null) => {
-    setValue("prompt", val);
+    setValue("addtionalPrompt", val);
   };
   return (
     <Box
