@@ -3,7 +3,7 @@ import { api } from "./fetcher";
 export interface PostQRCodeProps {
   qrData: string;
   imageUrl: string;
-  addtionalPrompt?: string;
+  additionalPrompt?: string;
   address: string;
   contractAddress: string;
   tokenId: string;
@@ -12,7 +12,7 @@ export interface PostQRCodeProps {
 export const postQRCode = async ({
   imageUrl,
   qrData,
-  addtionalPrompt,
+  additionalPrompt,
   contractAddress,
   tokenId,
   address,
@@ -20,7 +20,7 @@ export const postQRCode = async ({
   const res = await api.post(`/qr`, {
     image_url: imageUrl,
     qr_data: qrData,
-    addtional_prompt: addtionalPrompt,
+    additional_prompt: additionalPrompt,
     contract_address: contractAddress,
     token_id: tokenId,
     address,

@@ -16,8 +16,8 @@ export const usePostQrCode = () => {
       const resultImage = await postQRCode({
         imageUrl,
         qrData: data.qrData,
-        addtionalPrompt: data.addtionalPrompt
-          ? data.addtionalPrompt
+        additionalPrompt: data.additionalPrompt
+          ? data.additionalPrompt
           : undefined,
         contractAddress: data.nft.contract.address,
         tokenId: data.nft.tokenId,

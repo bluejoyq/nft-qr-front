@@ -9,5 +9,5 @@ export interface NftQrForm {
   nft: Nft;
   qrData: string;
   address: string;
-  addtionalPrompt: string | null;
+  additionalPrompt: string | null;
 }

@@ -33,6 +33,7 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
   const nft = watch("nft");
 
   const qrData = watch("qrData");
+  const additionalPrompt = watch("additionalPrompt");
   return (
     <Box
       css={css`
@@ -43,8 +44,20 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
       `}
     >
       <NftPreview nft={nft} />
-      <Alert>
-        QR Data : <Typography typography={"h4"}>{qrData}</Typography>
+      <Alert
+        css={css`
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        `}
+      >
+        <Box>
+          QR Data : <Typography typography={"h4"}>{qrData}</Typography>
+        </Box>
+        <Box>
+          Addtional Prompt :{" "}
+          <Typography typography={"h4"}>{additionalPrompt}</Typography>
+        </Box>
       </Alert>
       {isIdle ? (
         <AppButton

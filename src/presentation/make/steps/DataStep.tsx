@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { Box, Input, Select, Option } from "@mui/joy";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useNftQrFormContext } from "../hooks/useNftQrFormContext";
 import { NftPreview } from "@/presentation/common/components/NftPreview";
 import { AppButton } from "@/presentation/common/components/AppButton";
@@ -12,12 +12,10 @@ export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
   const { register, watch, setValue } = useNftQrFormContext();
   const nft = watch("nft");
   const address = watch("address");
+  const qrData = watch("qrData");
   const [readOnly, setReadOnly] = useState(false);
 
-  const handleSelectChange = (
-    _: any,
-    val: "address" | "addressUrl" | "nftUrl" | "free" | null
-  ) => {
+  const handleSelectChange = (_: any, val: string | null) => {
     if (val == "free" || val == null) {
       setReadOnly(false);
       return;
@@ -38,6 +36,13 @@ export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
         break;
     }
   };
+
+  useEffect(() => {
+    if (qrData?.length) {
+      return;
+    }
+    setValue("qrData", `${address}`);
+  }, []);
   return (
     <Box css={styles.container}>
       <NftPreview nft={nft} />
@@ -45,6 +50,7 @@ export const DataStep = ({ onNext }: DataStepProps): ReactElement => {
         placeholder="Recommended Data"
         css={styles.select}
         onChange={handleSelectChange}
+        defaultValue={"address"}
       >
         <Option value="address">Address</Option>
         <Option value="addressUrl">OpenSea Address URL</Option>
