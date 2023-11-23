@@ -26,15 +26,27 @@ export const postQRCode = async ({
     address,
   });
 
-  const result = new QrHistory(
-    res.data.id,
-    res.data.address,
-    res.data.contract_address,
-    res.data.token_id,
-    res.data.image_src,
-    res.data.qr_data
-  );
+  const result = new QrHistory(res.data);
   return result;
+};
+
+export interface GetQrHistoriesResponse {
+  data: QrHistory[];
+  next: number | null;
+}
+export const getQrHistories = async (
+  offset: number | undefined
+): Promise<GetQrHistoriesResponse> => {
+  const res = await api.get(`/qr`, {
+    params: {
+      offset,
+    },
+  });
+  const data = res.data.data.map((data: any) => new QrHistory(data));
+  return {
+    data,
+    next: res.data.next,
+  };
 };
 
 export const getHealth = async (): Promise<void> => {

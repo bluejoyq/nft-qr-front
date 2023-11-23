@@ -18,19 +18,12 @@ export class QrHistory {
     name: "qr_data",
   })
   qrData: string;
-  constructor(
-    id: number,
-    address: string,
-    contractAddress: string,
-    tokenId: string,
-    imageSrc: string,
-    qrData: string
-  ) {
-    this.id = id;
-    this.address = address;
-    this.contractAddress = contractAddress;
-    this.tokenId = tokenId;
-    this.imageSrc = imageSrc;
-    this.qrData = qrData;
+  constructor(data: any) {
+    this.id = data.id;
+    this.address = data.address;
+    this.contractAddress = data.contract_address;
+    this.tokenId = data.token_id;
+    this.imageSrc = data.image_src;
+    this.qrData = data.qr_data;
   }
 }

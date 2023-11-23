@@ -14,6 +14,7 @@ export const Layout = (): ReactElement => {
         justify-content: start;
         height: 100vh;
         width: 100vw;
+        overflow: hidden;
       `}
     >
       <Header />
