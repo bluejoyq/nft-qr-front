@@ -25,6 +25,7 @@ const styles = {
     flex-direction: row;
     align-items: center;
     height: 80px;
+    overflow: hidden;
   `,
   logo: css`
     color: #fff;

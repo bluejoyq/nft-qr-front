@@ -14,6 +14,7 @@ import {
   AppButton,
   AppIconButton,
 } from "@/presentation/common/components/AppButton";
+import axios from "axios";
 
 interface ResultStepProps {
   handleReset: () => void;
@@ -22,7 +23,7 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
   const { watch, getValues } = useNftQrFormContext();
   const {
     mutate,
-    data: resultImage,
+    data: result,
     error,
     reset,
     isPending,
@@ -57,7 +58,7 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
       ) : (
         <ErrorBoundary onReset={reset} fallbackRender={AppError}>
           <Result
-            resultImage={resultImage}
+            resultImageSrc={result?.imageSrc}
             error={error}
             isPending={isPending}
             handleReset={handleReset}
@@ -69,13 +70,13 @@ export const ResultStep = ({ handleReset }: ResultStepProps): ReactElement => {
 };
 
 interface ResultProps {
-  resultImage: Blob | undefined;
+  resultImageSrc: string | undefined;
   error: Error | null;
   isPending: boolean;
   handleReset: () => void;
 }
 const Result = ({
-  resultImage,
+  resultImageSrc,
   error,
   isPending,
   handleReset,
@@ -84,13 +85,17 @@ const Result = ({
     throw error;
   }
 
-  const handleDownload = (resultImage: Blob) => {
+  const handleDownload = async (resultImageSrc: string) => {
+    const res = await axios(resultImageSrc, {
+      responseType: "blob",
+    });
+    const blob = await new Blob([res.data], { type: "image/png" });
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(resultImage);
+    link.href = URL.createObjectURL(blob);
     link.download = "qr-code.png";
     link.click();
   };
-  if (!resultImage || isPending) {
+  if (!resultImageSrc || isPending) {
     return (
       <Box
         css={css`
@@ -109,7 +114,7 @@ const Result = ({
     <Box>
       <Box>
         <img
-          src={URL.createObjectURL(resultImage)}
+          src={resultImageSrc}
           css={css`
             width: 100%;
             max-width: 500px;
@@ -125,7 +130,7 @@ const Result = ({
         `}
       >
         <AppButton onClick={handleReset}>Restart</AppButton>
-        <AppIconButton onClick={() => handleDownload(resultImage)}>
+        <AppIconButton onClick={() => handleDownload(resultImageSrc)}>
           <DownloadIcon />
         </AppIconButton>
       </Box>

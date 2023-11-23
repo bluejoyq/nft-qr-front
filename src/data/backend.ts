@@ -1,3 +1,4 @@
+import { QrHistory } from "@/domain/models";
 import { api } from "./fetcher";
 export interface PostQRCodeProps {
   qrData: string;
@@ -15,7 +16,7 @@ export const postQRCode = async ({
   contractAddress,
   tokenId,
   address,
-}: PostQRCodeProps): Promise<Blob> => {
+}: PostQRCodeProps): Promise<QrHistory> => {
   const res = await api.post(`/qr`, {
     image_url: imageUrl,
     qr_data: qrData,
@@ -24,7 +25,15 @@ export const postQRCode = async ({
     token_id: tokenId,
     address,
   });
-  const result = await res.data;
+
+  const result = new QrHistory(
+    res.data.id,
+    res.data.address,
+    res.data.contract_address,
+    res.data.token_id,
+    res.data.image_src,
+    res.data.qr_data
+  );
   return result;
 };
 
