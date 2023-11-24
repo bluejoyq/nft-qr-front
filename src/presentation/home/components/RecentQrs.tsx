@@ -1,9 +1,10 @@
 import { ReactElement, Suspense } from "react";
 import { useReadQrHistories } from "../hooks/useReadQrHistories";
-import { Box, CircularProgress } from "@mui/joy";
+import { Box, CircularProgress, Typography } from "@mui/joy";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { css } from "@emotion/react";
+import { QrResult } from "./QrResult";
 
 export const RecentQrs = (): ReactElement => {
   return (
@@ -18,13 +19,10 @@ const Result = () => {
   const qrs = data?.pages.map((page) => page.data).flat();
   return (
     <ErrorBoundary fallbackRender={AppError} onReset={() => refetch()}>
+      <Typography typography={"h1"}>Recent Qrs</Typography>
       <Box css={styles.container}>
         {qrs?.map((qr) => {
-          return (
-            <div key={qr.id}>
-              <img src={qr.imageSrc} css={styles.image} />
-            </div>
-          );
+          return <QrResult key={qr.id} qrHistory={qr} />;
         })}
       </Box>
     </ErrorBoundary>
@@ -34,15 +32,9 @@ const Result = () => {
 const styles = {
   container: css`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     height: 100%;
     row-gap: 16px;
     column-gap: 16px;
-  `,
-  image: css`
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    aspect-ratio: 1;
   `,
 };
