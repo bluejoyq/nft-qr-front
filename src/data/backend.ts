@@ -41,6 +41,7 @@ export const getQrHistories = async (
     params: {
       offset,
     },
+    timeout: 1000,
   });
   const data = res.data.data.map((data: any) => new QrHistory(data));
   return {

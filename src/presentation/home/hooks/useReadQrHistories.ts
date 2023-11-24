@@ -21,5 +21,6 @@ export const useReadQrHistories = () => {
       }
       return next;
     },
+    retry: false,
   });
 };
