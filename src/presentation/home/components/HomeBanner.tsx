@@ -53,6 +53,7 @@ const styles = {
       padding: 48px 64px;
       gap: 64px;
       grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
     }
   `,
   btn: css`
