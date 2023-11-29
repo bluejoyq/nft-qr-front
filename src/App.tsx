@@ -48,7 +48,6 @@ export const App = (): ReactElement => {
         <QueryClientProvider client={queryClient}>
           <WagmiConfig config={config}>
             <RouterProvider router={router} />
-
             <CssBaseline />
             <ReactQueryDevtools initialIsOpen={false} />
           </WagmiConfig>

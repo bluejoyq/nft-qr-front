@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import { HomePage } from "./presentation/home/HomePage";
-import { HOME_PATH, NFT_PATH } from "./domain/paths";
+import { HOME_PATH, NFT_PATH, PHOTO_PATH } from "./domain/paths";
 import { NftPage } from "./presentation/nft/NftPage";
 import { Layout } from "./presentation/common/Layout";
+import { PhotoPage } from "./presentation/photo/PhotoPage";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: NFT_PATH,
         element: <NftPage />,
+      },
+      {
+        path: PHOTO_PATH,
+        element: <PhotoPage />,
       },
     ],
   },

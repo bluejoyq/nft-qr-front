@@ -1,4 +1,4 @@
-import { NFT_PATH } from "@/domain/paths";
+import { NFT_PATH, PHOTO_PATH } from "@/domain/paths";
 import { AppButton } from "@/presentation/common/components/AppButton";
 import { AppLink } from "@/presentation/common/components/AppLink";
 import { mq } from "@/presentation/common/constants/mq";
@@ -21,7 +21,7 @@ export const HomeBanner = (): ReactElement => {
           <br />
           QRCODE
         </Typography>
-        <AppLink to="/make">
+        <AppLink to={PHOTO_PATH}>
           <AppButton css={styles.btn}>
             <Typography typography={"h3"}>Start With Photo</Typography>
           </AppButton>
