@@ -20,7 +20,7 @@ export type Step =
   | "Style"
   | "Result";
 
-export const MakePage = (): ReactElement => {
+export const NftPage = (): ReactElement => {
   const initialStep = "Get Address";
   const [step, setStep] = useState<Step>(initialStep);
   const methods = useForm<NftQrForm>();

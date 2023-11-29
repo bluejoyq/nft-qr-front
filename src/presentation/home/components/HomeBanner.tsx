@@ -1,3 +1,4 @@
+import { NFT_PATH } from "@/domain/paths";
 import { AppButton } from "@/presentation/common/components/AppButton";
 import { AppLink } from "@/presentation/common/components/AppLink";
 import { css } from "@emotion/react";
@@ -16,7 +17,10 @@ export const HomeBanner = (): ReactElement => {
         QR Codes
       </Typography>
       <AppLink to="/make">
-        <AppButton>Get Started</AppButton>
+        <AppButton>Start With Photo</AppButton>
+      </AppLink>
+      <AppLink to={NFT_PATH}>
+        <AppButton color="neutral">Start With NFT</AppButton>
       </AppLink>
     </Box>
   );

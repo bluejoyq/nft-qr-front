@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { Box, Typography, useTheme } from "@mui/joy";
-import { Step } from "../MakePage";
+import { Step } from "../NftPage";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { AppIconButton } from "@/presentation/common/components/AppButton";
 export const MakePageHeader = ({
