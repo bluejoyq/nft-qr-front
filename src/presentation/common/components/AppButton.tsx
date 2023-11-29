@@ -9,8 +9,6 @@ export const AppButton = (props: ButtonProps) => {
         text-decoration: none;
         color: inherit;
         border-radius: 8px;
-        font-weight: 700;
-        font-size: 20px;
       `}
     />
   );

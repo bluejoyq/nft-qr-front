@@ -15,6 +15,8 @@ export const Layout = (): ReactElement => {
         height: 100vh;
         width: 100vw;
         overflow: hidden;
+        overflow-y: scroll;
+        background-color: #0e0e0e;
       `}
     >
       <Header />

@@ -24,12 +24,10 @@ const styles = {
   header: css`
     flex-direction: row;
     align-items: center;
-    height: 80px;
-    overflow: hidden;
   `,
   logo: css`
     color: #fff;
-    width: 200px;
+    width: 150px;
     aspect-ratio: 50/12;
     height: auto;
   `,

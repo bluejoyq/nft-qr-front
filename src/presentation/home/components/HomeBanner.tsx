@@ -1,27 +1,40 @@
 import { NFT_PATH } from "@/domain/paths";
 import { AppButton } from "@/presentation/common/components/AppButton";
 import { AppLink } from "@/presentation/common/components/AppLink";
+import { mq } from "@/presentation/common/constants/mq";
 import { css } from "@emotion/react";
-import { Box, Typography } from "@mui/joy";
+import { Box, Theme, Typography, useTheme } from "@mui/joy";
 import { ReactElement } from "react";
-
+import { ExampleQr } from "./ExampleQr";
 export const HomeBanner = (): ReactElement => {
+  const theme = useTheme();
   return (
     <Box css={styles.container}>
-      <img src={"sample.png"} css={styles.example} />
-      <Typography typography="h1" css={styles.title}>
-        Create your own
-        <br />
-        Personalized
-        <br />
-        QR Codes
-      </Typography>
-      <AppLink to="/make">
-        <AppButton>Start With Photo</AppButton>
-      </AppLink>
-      <AppLink to={NFT_PATH}>
-        <AppButton color="neutral">Start With NFT</AppButton>
-      </AppLink>
+      <Box css={styles.typoContainer}>
+        <Typography typography="body-lg" css={styles.topLabel(theme)}>
+          Take QR Codes to the next level
+        </Typography>
+        <Typography typography="h1" css={styles.title}>
+          Create Your Own
+          <br />
+          Personalized
+          <br />
+          QRCODE
+        </Typography>
+        <AppLink to="/make">
+          <AppButton css={styles.btn}>
+            <Typography typography={"h3"}>Start With Photo</Typography>
+          </AppButton>
+        </AppLink>
+        <AppLink to={NFT_PATH}>
+          <AppButton color="neutral" css={styles.btn}>
+            <Typography typography={"h3"}>Start With NFT</Typography>
+          </AppButton>
+        </AppLink>
+      </Box>
+      <Box css={styles.exampleContainer}>
+        <ExampleQr />
+      </Box>
     </Box>
   );
 };
@@ -29,20 +42,45 @@ export const HomeBanner = (): ReactElement => {
 const styles = {
   container: css`
     width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: start;
+    gap: 16px;
+    flex-shrink: 0;
+    grid-template-rows: 1fr 1fr;
+    padding: 16px;
+    ${mq.wide} {
+      padding: 48px 64px;
+      gap: 64px;
+      grid-template-columns: 1fr 1fr;
+    }
+  `,
+  btn: css`
+    ${mq.wide} {
+      padding: 16px 32px;
+    }
+  `,
+  typoContainer: css`
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap: 16px;
+  `,
+  exampleContainer: css`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    gap: 16px;
-    flex-shrink: 0;
   `,
-  example: css`
-    width: 100%;
-    max-width: 300px;
-    border-radius: 8px;
+  topLabel: (theme: Theme) => css`
+    color: ${theme.palette.primary[100]};
   `,
+
   title: css`
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 700;
+    ${mq.wide} {
+      font-size: 48px;
+    }
   `,
 };
