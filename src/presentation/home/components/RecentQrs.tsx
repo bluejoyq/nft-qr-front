@@ -5,27 +5,31 @@ import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { css } from "@emotion/react";
 import { QrResult } from "./QrResult";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 
 export const RecentQrs = (): ReactElement => {
+  const { reset } = useQueryErrorResetBoundary();
   return (
     <Suspense fallback={<CircularProgress />}>
-      <Result />
+      <ErrorBoundary fallbackRender={AppError} onReset={reset}>
+        <Result />
+      </ErrorBoundary>
     </Suspense>
   );
 };
 
 const Result = () => {
-  const { data, refetch } = useReadQrHistories();
+  const { data } = useReadQrHistories();
   const qrs = data?.pages.map((page) => page.data).flat();
   return (
-    <ErrorBoundary fallbackRender={AppError} onReset={() => refetch()}>
+    <>
       <Typography typography={"h1"}>Recent Qrs</Typography>
       <Box css={styles.container}>
         {qrs?.map((qr) => {
           return <QrResult key={qr.id} qrHistory={qr} />;
         })}
       </Box>
-    </ErrorBoundary>
+    </>
   );
 };
 
