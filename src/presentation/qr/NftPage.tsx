@@ -72,7 +72,10 @@ export const NftPage = (): ReactElement => {
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
     setValue("currentStep", newStep);
   });
-  useBlocker(() => {
+  useBlocker((blockData) => {
+    if (blockData.historyAction != "POP") {
+      return false;
+    }
     if (currentStep == "Get Address") {
       return false;
     }

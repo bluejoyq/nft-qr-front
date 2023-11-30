@@ -13,6 +13,9 @@ export const Footer = () => {
       css={css`
         background-color: #313131;
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `}
     >
       <Box

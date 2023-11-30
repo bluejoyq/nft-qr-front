@@ -61,7 +61,10 @@ export const PhotoPage = (): ReactElement => {
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
     setValue("currentStep", newStep);
   });
-  useBlocker(() => {
+  useBlocker((blockData) => {
+    if (blockData.historyAction != "POP") {
+      return false;
+    }
     if (currentStep == "Upload Photo") {
       return false;
     }
