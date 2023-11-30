@@ -9,7 +9,7 @@ import {
 } from "@mui/joy";
 import { ReactElement } from "react";
 import { usePalette } from "@/presentation/common/hooks/usePalette";
-
+import { mq } from "@/presentation/common/constants/mq";
 interface AppStepperProps<T> {
   steps: T[];
   currentStep: T;
@@ -21,7 +21,7 @@ export const AppStepper = <T,>({
   setCurrentStep,
 }: AppStepperProps<T>): ReactElement => {
   return (
-    <Stepper sx={{ width: "100%" }}>
+    <Stepper css={styles.stepper}>
       {steps.map((step, idx) => (
         <AppStep
           key={step as string}
@@ -53,6 +53,7 @@ const AppStep = ({
   isComplete,
 }: PhotoStepProps) => {
   const palette = usePalette();
+
   return (
     <Button
       variant="plain"
@@ -79,9 +80,16 @@ const AppStep = ({
 const styles = {
   typo: (palette: Palette, isCurrent: boolean) => css`
     color: ${isCurrent ? palette.primary[200] : palette.neutral[400]};
+    display: none;
+    ${mq.wide} {
+      display: block;
+    }
   `,
   btn: css`
     border-radius: 8px;
     flex: 1;
+  `,
+  stepper: css`
+    width: 100%;
   `,
 };

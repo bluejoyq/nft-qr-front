@@ -11,6 +11,7 @@ import { AppButton } from "@/presentation/common/components/AppButton";
 import { AppInput } from "@/presentation/common/components/AppInput";
 import WalletOutlinedIcon from "@mui/icons-material/WalletOutlined";
 import { usePalette } from "@/presentation/common/hooks/usePalette";
+import { mq } from "@/presentation/common/constants/mq";
 interface ConnectStepProps {
   stepNext: (address: string) => void;
   defaultValue: string;
@@ -127,7 +128,10 @@ const styles = {
   inputContainer: css`
     width: 100%;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
+    ${mq.wide} {
+      grid-template-columns: 2fr 1fr;
+    }
     gap: 16px;
     max-width: 600px;
   `,

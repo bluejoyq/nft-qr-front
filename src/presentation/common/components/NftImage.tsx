@@ -6,14 +6,11 @@ interface NftImageProps {
   nft: Nft;
 }
 export const NftImage = ({ nft }: NftImageProps): ReactElement => {
-  const imageUrl = nft.rawMetadata?.image?.replace(
-    "ipfs://",
-    "https://ipfs.io/ipfs/"
-  );
+  const imageUrl = nft.image.cachedUrl ?? nft.image.originalUrl;
   return (
     <img
       src={imageUrl}
-      alt={nft.title}
+      alt={nft.name}
       css={css`
         width: 100%;
         max-width: 300px;

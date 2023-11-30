@@ -16,7 +16,7 @@ export const DataStep = ({
   return (
     <Box css={styles.container}>
       <FormControl css={styles.formContainer}>
-        <FormLabel>Label</FormLabel>
+        <FormLabel>QR Data</FormLabel>
         <AppInput
           placeholder="Data encoded in QR"
           variant="soft"
@@ -50,11 +50,10 @@ const styles = {
   `,
   formContainer: css`
     width: 100%;
-    max-width: 300px;
+    max-width: 500px;
   `,
   input: css`
     width: 100%;
-    max-width: 300px;
   `,
   nextButton: css`
     margin-top: 16px;

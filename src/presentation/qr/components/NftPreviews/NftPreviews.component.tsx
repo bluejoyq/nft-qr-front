@@ -3,7 +3,7 @@ import {
   NftPreview,
   NftPreviewSkeleton,
 } from "@/presentation/common/components/NftPreview";
-import { Box, Button } from "@mui/joy";
+import { Alert, Box, Button, Typography } from "@mui/joy";
 import { InfiniteData, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Network, Nft, OwnedNftsResponse } from "alchemy-sdk";
 import { ReactElement } from "react";
@@ -29,7 +29,8 @@ const useLoadNfts = (network: Network, address: string) => {
         return {
           ...res,
           ownedNfts: res.ownedNfts.filter(
-            (nft) => nft.image != null && nft.name != null,
+            (nft) =>
+              nft.image.contentType?.includes("image") && nft.name != null,
           ),
         };
       },
@@ -69,6 +70,24 @@ const NftPreviewsComponent = ({
     network,
     address,
   );
+  if (data.length === 0 && !isLoading) {
+    return (
+      <Box css={styles.emptyBox}>
+        <Alert
+          color="warning"
+          css={css`
+            border-radius: 8px;
+          `}
+        >
+          <Typography typography="h3">
+            You don't have any NFTs in your wallet.
+            <br />
+            Please choose anthor wallet or network.
+          </Typography>
+        </Alert>
+      </Box>
+    );
+  }
   return (
     <Box css={nftPreviewBoxStyles}>
       {data.map((nft) => {
@@ -101,6 +120,13 @@ const styles = {
   btn: css`
     border-radius: 8px;
     padding: 8px;
+  `,
+  emptyBox: css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   `,
 };
 

@@ -1,6 +1,6 @@
 import { ReactElement, useCallback } from "react";
 import { pageContentStyles, pagePaddingStyles } from "../common/styles";
-import { AppStepper } from "./components/PhotoStepper";
+import { AppStepper } from "./components/AppStepper";
 import { FormProvider } from "react-hook-form";
 import { PhotoForm, usePhotoForm } from "./hooks/usePhotoForm";
 import { UploadStep } from "./steps/UploadStep";

@@ -11,7 +11,7 @@ export const NftPreview = ({ nft }: NftPreviewProps) => {
   return (
     <Box css={nftPreviewStyles}>
       <NftImage nft={nft} />
-      <Typography typography="h6">{nft.title}</Typography>
+      <Typography typography="h6">{nft.name}</Typography>
     </Box>
   );
 };

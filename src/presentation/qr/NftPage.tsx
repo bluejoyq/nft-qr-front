@@ -8,7 +8,7 @@ import {
 import { NftSteps } from "./constants/Steps";
 import { NftForm, useNftForm } from "./hooks/useNftForm";
 import { useBlocker } from "react-router-dom";
-import { AppStepper } from "./components/PhotoStepper";
+import { AppStepper } from "./components/AppStepper";
 import { PromptStep } from "./steps/PromptStep";
 import { PromptKey, PromptValue } from "./constants/Prompts";
 import { DataStep } from "./steps/DataStep";
