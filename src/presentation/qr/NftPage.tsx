@@ -98,6 +98,7 @@ export const NftPage = (): ReactElement => {
               setValue("address", address);
               stepNext();
             }}
+            defaultValue={watch("address")}
           />
         )}
         {currentStep == "Select Nft" && (

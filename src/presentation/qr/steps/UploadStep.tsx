@@ -109,7 +109,7 @@ const styles = {
   nextButton: css`
     margin-top: 16px;
     width: 100%;
-    max-width: 300px;
+    max-width: 500px;
     padding: 16px;
   `,
 };

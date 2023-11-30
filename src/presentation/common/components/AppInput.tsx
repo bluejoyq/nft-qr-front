@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 export const AppInput = forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
     return <Input ref={ref} css={inputStyles} {...props} />;
-  }
+  },
 );
 
 const inputStyles = css`
