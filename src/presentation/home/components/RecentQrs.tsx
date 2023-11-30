@@ -4,8 +4,9 @@ import { Box, CircularProgress, Typography } from "@mui/joy";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { css } from "@emotion/react";
-import { QrResult } from "./QrResult";
+import { QRHistoryPreview, QRHistoryPreviewSkeleton } from "./QRHistoryPreview";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { mq } from "@/presentation/common/constants/mq";
 
 export const RecentQrs = (): ReactElement => {
   const { reset } = useQueryErrorResetBoundary();
@@ -19,15 +20,18 @@ export const RecentQrs = (): ReactElement => {
 };
 
 const Result = () => {
-  const { data } = useReadQrHistories();
+  const { data, sentryRef, isLoading, hasNextPage } = useReadQrHistories();
   const qrs = data?.pages.map((page) => page.data).flat();
   return (
     <>
       <Typography typography={"h1"}>Recent Qrs</Typography>
       <Box css={styles.container}>
         {qrs?.map((qr) => {
-          return <QrResult key={qr.id} qrHistory={qr} />;
+          return <QRHistoryPreview key={qr.id} qrHistory={qr} />;
         })}
+        {(isLoading || hasNextPage) && (
+          <QRHistoryPreviewSkeleton ref={sentryRef} />
+        )}
       </Box>
     </>
   );
@@ -36,9 +40,12 @@ const Result = () => {
 const styles = {
   container: css`
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     height: 100%;
-    row-gap: 16px;
-    column-gap: 16px;
+    gap: 16px;
+    ${mq.wide} {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
   `,
 };
