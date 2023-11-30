@@ -3,35 +3,41 @@ import { usePalette } from "@/presentation/common/hooks/usePalette";
 import { css } from "@emotion/react";
 import { Box, Palette, Typography } from "@mui/joy";
 import { ReactElement } from "react";
-import { PhotoPreviewBlob } from "../components/PhotoPreview";
-import { PhotoForm, usePhotoFormContext } from "../hooks/usePhotoForm";
+import { PhotoPreviewSrc } from "../components/PhotoPreview";
 import { useMutation } from "@tanstack/react-query";
-import { postQRCodeWithPhoto } from "@/data/backend";
+import { postQRCodeWithNft } from "@/data/backend";
 import { QRResult } from "../components/QRResult";
+import { NftForm, useNftFormContext } from "../hooks/useNftForm";
 
-const useCreatePhoto = () => {
+const useCreateNftQr = () => {
   return useMutation({
-    mutationFn: async (formData: PhotoForm) => {
-      return await postQRCodeWithPhoto({
+    mutationFn: async (formData: NftForm) => {
+      const imageUrl = formData.nft?.image.cachedUrl;
+      if (imageUrl == null) {
+        throw new Error("Image is null");
+      }
+      return await postQRCodeWithNft({
         ...formData,
+        imageUrl,
+        customValue: formData.custom?.value ?? "",
       });
     },
   });
 };
 
-export const PhotoCompleteStep = (): ReactElement => {
-  const { watch } = usePhotoFormContext();
+export const NftCompleteStep = (): ReactElement => {
+  const { watch } = useNftFormContext();
   const palette = usePalette();
   const formData = watch();
-  const { photo, qrData, custom } = formData;
-  const { mutateAsync, isPending, data } = useCreatePhoto();
+  const { nft, qrData, custom } = formData;
+  const { mutateAsync, isPending, data } = useCreateNftQr();
 
   const handleCreate = async () => {
     await mutateAsync(formData);
   };
   return (
     <Box css={styles.container}>
-      <PhotoPreviewBlob photo={photo} />
+      <PhotoPreviewSrc src={nft?.image.cachedUrl ?? ""} />
       <Box css={styles.optionContainer(palette)}>
         <Typography typography={"title-lg"}>QR Data</Typography>
         <Typography>{qrData}</Typography>

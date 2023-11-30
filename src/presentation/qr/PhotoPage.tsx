@@ -6,7 +6,6 @@ import { PhotoForm, usePhotoForm } from "./hooks/usePhotoForm";
 import { UploadStep } from "./steps/UploadStep";
 import { DataStep } from "./steps/DataStep";
 import { CustomStep } from "./steps/CustomStep";
-import { CustomKey, CustomValue } from "./constants/Custom";
 import { useBlocker } from "react-router-dom";
 import { PhotoSteps } from "./constants/Steps";
 import { PhotoCompleteStep } from "./steps/PhotoCompleteStep";
@@ -58,7 +57,7 @@ export const PhotoPage = (): ReactElement => {
   const { handleSubmit, watch, setValue } = methods;
   const currentStep = watch("currentStep");
 
-  const customKey = watch("customKey");
+  const custom = watch("custom");
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
     setValue("currentStep", newStep);
   });
@@ -105,16 +104,11 @@ export const PhotoPage = (): ReactElement => {
         )}
         {currentStep == "Custom" && (
           <CustomStep
-            stepNext={(customKey: CustomKey, customValue: CustomValue) => {
-              setValue("customKey", customKey);
-              setValue("customValue", customValue);
+            stepNext={(custom) => {
+              setValue("custom", custom);
               stepNext();
             }}
-            defaultValue={
-              customKey == null
-                ? null
-                : { key: customKey, value: watch("customValue") }
-            }
+            defaultValue={custom == null ? null : custom}
           />
         )}
         {currentStep == "Complete" && <PhotoCompleteStep />}

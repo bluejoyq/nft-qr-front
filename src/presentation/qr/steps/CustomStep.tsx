@@ -3,19 +3,15 @@ import { css } from "@emotion/react";
 import { Box, Option, Palette, Select, Typography } from "@mui/joy";
 import { ReactElement, useState } from "react";
 import {
+  Custom,
   CustomKey,
-  CustomValue,
   customExamplePhotos,
   customOptions,
 } from "../constants/Custom";
 import DrawOutlinedIcon from "@mui/icons-material/DrawOutlined";
 import { usePalette } from "@/presentation/common/hooks/usePalette";
-interface Custom {
-  key: CustomKey;
-  value: CustomValue;
-}
 interface CustomStepProps {
-  stepNext: (customKey: CustomKey, customValue: CustomValue) => void;
+  stepNext: (custom: Custom | null) => void;
   defaultValue: Custom | null;
 }
 export const CustomStep = ({
@@ -46,13 +42,9 @@ export const CustomStep = ({
       )}
       <AppButton
         onClick={() => {
-          if (custom == null) {
-            return;
-          }
-          stepNext(custom.key, custom.value);
+          stepNext(custom);
         }}
         css={styles.nextButton}
-        disabled={custom == null}
       >
         <Typography typography={"h3"}>Next</Typography>
       </AppButton>

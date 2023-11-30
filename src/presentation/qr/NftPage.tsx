@@ -10,10 +10,10 @@ import { NftForm, useNftForm } from "./hooks/useNftForm";
 import { useBlocker } from "react-router-dom";
 import { AppStepper } from "./components/AppStepper";
 import { CustomStep } from "./steps/CustomStep";
-import { CustomKey, CustomValue } from "./constants/Custom";
 import { DataStep } from "./steps/DataStep";
 import { ConnectStep } from "./steps/ConnectStep";
 import { SelectNftStep } from "./steps/SelectNftStep";
+import { NftCompleteStep } from "./steps/NftCompleteStep";
 
 const useStepMove = (
   currentStep: NftSteps,
@@ -66,7 +66,7 @@ export const NftPage = (): ReactElement => {
   };
   const { handleSubmit, watch, setValue } = methods;
   const currentStep = watch("currentStep");
-  const customKey = watch("customKey");
+  const custom = watch("custom");
   const address = watch("address");
 
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
@@ -124,18 +124,14 @@ export const NftPage = (): ReactElement => {
         )}
         {currentStep == "Custom" && (
           <CustomStep
-            stepNext={(customKey: CustomKey, customValue: CustomValue) => {
-              setValue("customKey", customKey);
-              setValue("customValue", customValue);
+            stepNext={(custom) => {
+              setValue("custom", custom);
               stepNext();
             }}
-            defaultValue={
-              customKey == null
-                ? null
-                : { key: customKey, value: watch("customValue") }
-            }
+            defaultValue={custom}
           />
         )}
+        {currentStep == "Complete" && <NftCompleteStep />}
       </form>
     </FormProvider>
   );

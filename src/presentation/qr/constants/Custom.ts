@@ -24,3 +24,7 @@ export const customExamplePhotos = {
 
 export type CustomKey = keyof typeof customOptions;
 export type CustomValue = (typeof customOptions)[CustomKey];
+export interface Custom {
+  key: CustomKey;
+  value: CustomValue;
+}

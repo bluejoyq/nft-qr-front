@@ -13,9 +13,11 @@ interface QRResultProps {
   result: QrHistory;
 }
 export const QRResult = ({ result }: QRResultProps): ReactElement => {
-  const handleDownload = () => {
+  const handleDownload = async () => {
+    const response = await fetch(result.imageSrc);
+    const blob = await response.blob();
     const link = document.createElement("a");
-    link.href = result.imageSrc;
+    link.href = URL.createObjectURL(blob);
     link.click();
   };
   return (

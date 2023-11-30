@@ -12,7 +12,7 @@ export const postQRCodeWithPhoto = async ({
   customValue,
 }: PostQRCodeWithPhotoProps): Promise<QrHistory> => {
   const res = await api.post(
-    `/qr`,
+    `/qr/photo`,
     {
       photo: photo,
       qr_data: qrData,
@@ -39,12 +39,10 @@ export const postQRCodeWithNft = async ({
   qrData,
   customValue,
 }: PostQRCodePropsWithNft): Promise<QrHistory> => {
-  const imageRes = await fetch(imageUrl);
-  const imageBlob = await imageRes.blob();
   const res = await api.post(
-    `/qr`,
+    `/qr/nft`,
     {
-      photo: imageBlob,
+      image_url: imageUrl,
       qr_data: qrData,
       additional_prompt: customValue,
     },
