@@ -9,7 +9,7 @@ import { CustomStep } from "./steps/CustomStep";
 import { CustomKey, CustomValue } from "./constants/Custom";
 import { useBlocker } from "react-router-dom";
 import { PhotoSteps } from "./constants/Steps";
-import { Typography } from "@mui/joy";
+import { PhotoCompleteStep } from "./steps/PhotoCompleteStep";
 
 const useStepMove = (
   currentStep: PhotoSteps,
@@ -117,9 +117,7 @@ export const PhotoPage = (): ReactElement => {
             }
           />
         )}
-        {currentStep == "Complete" && (
-          <Typography typography={"h3"}>Complete</Typography>
-        )}
+        {currentStep == "Complete" && <PhotoCompleteStep />}
       </form>
     </FormProvider>
   );

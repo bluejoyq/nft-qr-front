@@ -25,6 +25,6 @@ export const useNftForm = () => {
   });
 };
 
-export const usePhotoFormContext = () => {
+export const useNftFormContext = () => {
   return useFormContext<NftForm>();
 };

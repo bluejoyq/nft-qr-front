@@ -9,13 +9,21 @@ export interface PostQRCodeWithPhotoProps {
 export const postQRCodeWithPhoto = async ({
   photo,
   qrData,
-  customValue: additionalcustom,
+  customValue,
 }: PostQRCodeWithPhotoProps): Promise<QrHistory> => {
-  const res = await api.post(`/qr`, {
-    photo: photo,
-    qr_data: qrData,
-    additional_custom: additionalcustom,
-  });
+  const res = await api.post(
+    `/qr`,
+    {
+      photo: photo,
+      qr_data: qrData,
+      additional_prompt: customValue,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 
   const result = new QrHistory(res.data);
   return result;
@@ -24,27 +32,28 @@ export interface PostQRCodePropsWithNft {
   qrData: string;
   imageUrl: string;
   customValue: string;
-  address: string;
-  contractAddress: string;
-  tokenId: string;
 }
 
 export const postQRCodeWithNft = async ({
   imageUrl,
   qrData,
-  customValue: additionalcustom,
-  contractAddress,
-  tokenId,
-  address,
+  customValue,
 }: PostQRCodePropsWithNft): Promise<QrHistory> => {
-  const res = await api.post(`/qr`, {
-    image_url: imageUrl,
-    qr_data: qrData,
-    additional_custom: additionalcustom,
-    contract_address: contractAddress,
-    token_id: tokenId,
-    address,
-  });
+  const imageRes = await fetch(imageUrl);
+  const imageBlob = await imageRes.blob();
+  const res = await api.post(
+    `/qr`,
+    {
+      photo: imageBlob,
+      qr_data: qrData,
+      additional_prompt: customValue,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 
   const result = new QrHistory(res.data);
   return result;

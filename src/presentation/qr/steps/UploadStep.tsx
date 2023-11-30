@@ -1,10 +1,9 @@
 import { AppButton } from "@/presentation/common/components/AppButton";
 import { css } from "@emotion/react";
-import { Box, Palette, Typography } from "@mui/joy";
+import { Box, Typography } from "@mui/joy";
 import { ReactElement, useRef, useState } from "react";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
-import { usePalette } from "@/presentation/common/hooks/usePalette";
-import PhotoLibraryRoundedIcon from "@mui/icons-material/PhotoLibraryRounded";
+import { PhotoPreviewBlob } from "../components/PhotoPreview";
 
 interface UploadStepProps {
   stepNext: (photo: Blob) => void;
@@ -28,20 +27,10 @@ export const UploadStep = ({
     const newPhoto = new Blob([file]);
     setPhoto(newPhoto);
   };
-  const palette = usePalette();
+
   return (
     <Box css={styles.container}>
-      {photo ? (
-        <img
-          src={URL.createObjectURL(photo)}
-          alt="uploaded"
-          css={styles.photoPreview(palette)}
-        />
-      ) : (
-        <Box css={styles.photoPreview(palette)}>
-          <PhotoLibraryRoundedIcon />
-        </Box>
-      )}
+      <PhotoPreviewBlob photo={photo} />
 
       <AppButton css={styles.photoButton} onClick={handleUploadClick}>
         <AddPhotoAlternateRoundedIcon />
@@ -89,23 +78,7 @@ const styles = {
       height: 32px;
     }
   `,
-  photoPreview: (palette: Palette) => css`
-    width: 100%;
-    aspect-ratio: 1;
-    height: auto;
-    max-width: 300px;
-    object-fit: contain;
-    background-color: ${palette.background.level2};
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    svg {
-      width: 64px;
-      height: 64px;
-      color: ${palette.text.secondary};
-    }
-  `,
+
   nextButton: css`
     margin-top: 16px;
     width: 100%;
