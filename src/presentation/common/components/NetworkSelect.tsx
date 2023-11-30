@@ -10,7 +10,7 @@ export const NetworkSelect = ({
   onNetworkChange,
   network,
 }: NetworkSelectProps): ReactElement => {
-  const handleChange = (_, newNetwork: Network | null) => {
+  const handleChange = (_: any, newNetwork: Network | null) => {
     if (!newNetwork) return;
     onNetworkChange(newNetwork);
   };

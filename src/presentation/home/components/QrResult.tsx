@@ -1,5 +1,4 @@
 import { QrHistory } from "@/domain/models";
-import { AppLink } from "@/presentation/common/components/AppLink";
 import { css } from "@emotion/react";
 import { Box, Chip, Typography } from "@mui/joy";
 import { ReactElement } from "react";
@@ -8,8 +7,6 @@ interface QrResultProps {
   qrHistory: QrHistory;
 }
 export const QrResult = ({ qrHistory }: QrResultProps): ReactElement => {
-  const openSeaOrigin = `https://opensea.io`;
-  const assetUrl = `${openSeaOrigin}/assets/${qrHistory.contractAddress}/${qrHistory.tokenId}`;
   return (
     <Box css={styles.box}>
       <img src={qrHistory.imageSrc} css={styles.image} />
@@ -19,30 +16,6 @@ export const QrResult = ({ qrHistory }: QrResultProps): ReactElement => {
           <Typography typography={"h5"} css={styles.typo}>
             {qrHistory.qrData}
           </Typography>
-        </Box>
-        <Box>
-          <Chip color="primary">Address</Chip>
-          <AppLink to={`${openSeaOrigin}/${qrHistory.address}`}>
-            <Typography typography={"h5"} css={[styles.typo, styles.link]}>
-              {qrHistory.address}
-            </Typography>
-          </AppLink>
-        </Box>
-        <Box>
-          <Chip color="primary">Contract Address</Chip>
-          <AppLink to={assetUrl}>
-            <Typography typography={"h5"} css={[styles.typo, styles.link]}>
-              {qrHistory.contractAddress}
-            </Typography>
-          </AppLink>
-        </Box>
-        <Box>
-          <Chip color="primary">Token Id</Chip>
-          <AppLink to={assetUrl}>
-            <Typography typography={"h5"} css={[styles.typo, styles.link]}>
-              {qrHistory.tokenId}
-            </Typography>
-          </AppLink>
         </Box>
       </Box>
     </Box>
