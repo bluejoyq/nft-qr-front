@@ -1,19 +1,24 @@
 import { AppButton } from "@/presentation/common/components/AppButton";
 import { css } from "@emotion/react";
 import { Box, Palette, Typography } from "@mui/joy";
-import { ReactElement, useRef } from "react";
-import { usePhotoFormContext } from "../hooks/usePhotoForm";
+import { ReactElement, useRef, useState } from "react";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
 import { usePalette } from "@/presentation/common/hooks/usePalette";
 import PhotoLibraryRoundedIcon from "@mui/icons-material/PhotoLibraryRounded";
-import { useStepNext } from "../hooks/useStepNext";
-export const UploadStep = (): ReactElement => {
+
+interface UploadStepProps {
+  stepNext: (photo: Blob) => void;
+  defaultValue: Blob | null;
+}
+export const UploadStep = ({
+  stepNext,
+  defaultValue,
+}: UploadStepProps): ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { watch, setValue } = usePhotoFormContext();
-  const { stepNext } = useStepNext();
   const handleUploadClick = () => {
     inputRef.current?.click();
   };
+  const [photo, setPhoto] = useState<Blob | null>(defaultValue ?? null);
 
   const handleUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -21,9 +26,8 @@ export const UploadStep = (): ReactElement => {
       return;
     }
     const newPhoto = new Blob([file]);
-    setValue("photo", newPhoto);
+    setPhoto(newPhoto);
   };
-  const photo = watch("photo");
   const palette = usePalette();
   return (
     <Box css={styles.container}>
@@ -52,7 +56,12 @@ export const UploadStep = (): ReactElement => {
         onChange={handleUploadChange}
       />
       <AppButton
-        onClick={stepNext}
+        onClick={() => {
+          if (photo == null) {
+            return;
+          }
+          stepNext(photo);
+        }}
         css={styles.nextButton}
         disabled={photo == null}
       >

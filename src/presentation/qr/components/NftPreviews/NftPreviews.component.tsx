@@ -5,9 +5,8 @@ import {
 } from "@/presentation/common/components/NftPreview";
 import { Box, Button } from "@mui/joy";
 import { InfiniteData, useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { Network, OwnedNftsResponse } from "alchemy-sdk";
+import { Network, Nft, OwnedNftsResponse } from "alchemy-sdk";
 import { ReactElement } from "react";
-import { useNftQrFormContext } from "../../hooks/useNftQrFormContext";
 import { nftPreviewBoxStyles } from "./NftPreviews.styles";
 import { css } from "@emotion/react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
@@ -30,8 +29,7 @@ const useLoadNfts = (network: Network, address: string) => {
         return {
           ...res,
           ownedNfts: res.ownedNfts.filter(
-            (nft) =>
-              nft.rawMetadata?.image != null && nft.rawMetadata?.name != null
+            (nft) => nft.image != null && nft.name != null,
           ),
         };
       },
@@ -60,17 +58,16 @@ const useLoadNfts = (network: Network, address: string) => {
 interface NftPreviewsComponentProps {
   network: Network;
   address: string;
-  onNext: () => void;
+  onNext: (nft: Nft) => void;
 }
 const NftPreviewsComponent = ({
   network,
   address,
   onNext,
 }: NftPreviewsComponentProps): ReactElement => {
-  const { setValue } = useNftQrFormContext();
   const { data, sentryRef, isLoading, hasNextPage } = useLoadNfts(
     network,
-    address
+    address,
   );
   return (
     <Box css={nftPreviewBoxStyles}>
@@ -78,8 +75,7 @@ const NftPreviewsComponent = ({
         return (
           <Button
             onClick={() => {
-              setValue("nft", nft);
-              onNext();
+              onNext(nft);
             }}
             variant="plain"
             key={`${nft.contract.address}/${nft.tokenId}`}

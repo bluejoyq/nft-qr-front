@@ -10,9 +10,11 @@ import { css } from "@emotion/react";
 import { AppButton } from "@/presentation/common/components/AppButton";
 
 interface ConnectStepProps {
-  onNext: (address: string) => void;
+  stepNext: (address: string) => void;
 }
-export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
+export const ConnectStep = ({
+  stepNext: stepNext,
+}: ConnectStepProps): ReactElement => {
   const { reset, connect, isLoading, error } = useConnect({
     connector: new MetaMaskConnector(),
   });
@@ -25,7 +27,7 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
   }, [address]);
 
   const handleNext = (address: string) => {
-    onNext(address);
+    stepNext(address);
   };
   return (
     <Box
@@ -48,7 +50,7 @@ export const ConnectStep = ({ onNext }: ConnectStepProps): ReactElement => {
           onChange={(e) => setVal(e.target.value)}
           value={val}
         />
-        <AppButton color="primary" onClick={() => onNext(val)}>
+        <AppButton color="primary" onClick={() => stepNext(val)}>
           Enter
         </AppButton>
       </Box>

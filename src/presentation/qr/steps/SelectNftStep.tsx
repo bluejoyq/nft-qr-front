@@ -1,23 +1,21 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import { Network } from "alchemy-sdk";
+import { Network, Nft } from "alchemy-sdk";
 import { ReactElement, Suspense, useState } from "react";
 import { NetworkSelect } from "@/presentation/common/components/NetworkSelect";
 import { ErrorBoundary } from "react-error-boundary";
 import { AppError } from "@/presentation/common/components/AppError";
 import { NftPreviews } from "../components/NftPreviews";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "@/data/firebase";
 import { Box } from "@mui/joy";
 import { css } from "@emotion/react";
 
 interface SelectNftStepProps {
   address: string;
-  onNext: () => void;
+  stepNext: (nft: Nft) => void;
 }
 
 export const SelectNftStep = ({
   address,
-  onNext,
+  stepNext,
 }: SelectNftStepProps): ReactElement => {
   const [network, setNetwork] = useState<Network>(Network.ETH_MAINNET);
 
@@ -39,10 +37,7 @@ export const SelectNftStep = ({
               <NftPreviews.Component
                 network={network}
                 address={address}
-                onNext={() => {
-                  onNext();
-                  logEvent(analytics, "selectNft");
-                }}
+                onNext={stepNext}
               />
             </Suspense>
           </ErrorBoundary>

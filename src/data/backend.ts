@@ -4,12 +4,12 @@ import { api } from "./fetcher";
 export interface PostQRCodeWithPhotoProps {
   photo: Blob;
   qrData: string;
-  additionalPrompt?: string;
+  promptValue: string;
 }
 export const postQRCodeWithPhoto = async ({
   photo,
   qrData,
-  additionalPrompt,
+  promptValue: additionalPrompt,
 }: PostQRCodeWithPhotoProps): Promise<QrHistory> => {
   const res = await api.post(`/qr`, {
     photo: photo,
@@ -20,23 +20,23 @@ export const postQRCodeWithPhoto = async ({
   const result = new QrHistory(res.data);
   return result;
 };
-export interface PostQRCodeProps {
+export interface PostQRCodePropsWithNft {
   qrData: string;
   imageUrl: string;
-  additionalPrompt?: string;
+  promptValue: string;
   address: string;
   contractAddress: string;
   tokenId: string;
 }
 
-export const postQRCode = async ({
+export const postQRCodeWithNft = async ({
   imageUrl,
   qrData,
-  additionalPrompt,
+  promptValue: additionalPrompt,
   contractAddress,
   tokenId,
   address,
-}: PostQRCodeProps): Promise<QrHistory> => {
+}: PostQRCodePropsWithNft): Promise<QrHistory> => {
   const res = await api.post(`/qr`, {
     image_url: imageUrl,
     qr_data: qrData,
@@ -55,7 +55,7 @@ export interface GetQrHistoriesResponse {
   next: number | null;
 }
 export const getQrHistories = async (
-  offset: number | undefined
+  offset: number | undefined,
 ): Promise<GetQrHistoriesResponse> => {
   const res = await api.get(`/qr`, {
     params: {
