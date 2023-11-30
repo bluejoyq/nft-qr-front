@@ -1,45 +1,53 @@
 import { css } from "@emotion/react";
-import {
-  Stepper,
-  Step,
-  StepIndicator,
-  Typography,
-  Theme,
-  useTheme,
-} from "@mui/joy";
+import { Stepper, Step, StepIndicator, Typography, Palette } from "@mui/joy";
 import { ReactElement } from "react";
-interface PhotoStepperProps {
-  __?: never;
-}
-export const PhotoStepper = ({ _ }: PhotoStepperProps): ReactElement => {
-  const isCurrent = false;
-  const theme = useTheme();
+import { usePhotoFormContext } from "../hooks/usePhotoForm";
+import { usePalette } from "@/presentation/common/hooks/usePalette";
+import { PhotoSteps } from "../constants/PhotoStep";
+
+export const PhotoStepper = (): ReactElement => {
+  const steps: PhotoSteps[] = ["Upload Photo", "QR Data", "Prompt", "Complete"];
+  const { watch } = usePhotoFormContext();
+  const currentStep = watch("currentStep");
   return (
     <Stepper sx={{ width: "100%" }}>
-      <Step
-        orientation="vertical"
-        indicator={<StepIndicator color="primary">1</StepIndicator>}
-      >
-        <Typography typography="title-lg" css={styles.typo(theme, !isCurrent)}>
-          Upload Photo
-        </Typography>
-      </Step>
-      <Step orientation="vertical" indicator={<StepIndicator>2</StepIndicator>}>
-        <Typography typography="title-lg" css={styles.typo(theme, isCurrent)}>
-          Review
-        </Typography>
-      </Step>
-      <Step orientation="vertical" indicator={<StepIndicator>3</StepIndicator>}>
-        <Typography typography="title-lg" css={styles.typo(theme, isCurrent)}>
-          Success
-        </Typography>
-      </Step>
+      {steps.map((step, idx) => (
+        <PhotoStep
+          key={step}
+          title={step}
+          idx={idx}
+          isCurrent={step === currentStep}
+        />
+      ))}
     </Stepper>
   );
 };
 
+interface PhotoStepProps {
+  isCurrent: boolean;
+  title: string;
+  idx: number;
+}
+const PhotoStep = ({ title, idx, isCurrent }: PhotoStepProps) => {
+  const palette = usePalette();
+  return (
+    <Step
+      orientation="vertical"
+      indicator={
+        <StepIndicator color={isCurrent ? "primary" : "neutral"}>
+          {idx + 1}
+        </StepIndicator>
+      }
+    >
+      <Typography typography="title-lg" css={styles.typo(palette, isCurrent)}>
+        {title}
+      </Typography>
+    </Step>
+  );
+};
+
 const styles = {
-  typo: (theme: Theme, isCurrent: boolean) => css`
-    color: ${isCurrent ? theme.palette.primary[200] : "inherit"};
+  typo: (palette: Palette, isCurrent: boolean) => css`
+    color: ${isCurrent ? palette.primary[200] : "inherit"};
   `,
 };

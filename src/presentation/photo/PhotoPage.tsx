@@ -12,14 +12,17 @@ export const PhotoPage = (): ReactElement => {
   const onSubmit = (data: PhotoForm) => {
     console.log(data);
   };
+
+  const { handleSubmit, watch } = methods;
+  const currentStep = watch("currentStep");
   return (
     <FormProvider {...methods}>
       <form
         css={[pageContentStyles, pagePaddingStyles]}
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <PhotoStepper />
-        <UploadStep />
+        {currentStep == "Upload Photo" && <UploadStep />}
       </form>
     </FormProvider>
   );

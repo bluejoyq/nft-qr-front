@@ -1,9 +1,9 @@
 import { PostQRCodeWithPhotoProps } from "@/data/backend";
 import { useForm, useFormContext } from "react-hook-form";
-import { PhotoStep } from "../constants/PhotoStep";
+import { PhotoSteps } from "../constants/PhotoStep";
 
 export interface PhotoForm extends PostQRCodeWithPhotoProps {
-  currentStep: PhotoStep;
+  currentStep: PhotoSteps;
   blob: Blob | null;
 }
 export const usePhotoForm = () => {

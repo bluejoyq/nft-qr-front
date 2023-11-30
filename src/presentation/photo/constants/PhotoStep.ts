@@ -1,1 +1,1 @@
-export type PhotoStep = "Upload Photo" | "QR Data" | "Prompt" | "Complete";
+export type PhotoSteps = "Upload Photo" | "QR Data" | "Prompt" | "Complete";
