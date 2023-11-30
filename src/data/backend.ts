@@ -4,7 +4,7 @@ import { api } from "./fetcher";
 export interface PostQRCodeWithPhotoProps {
   photo: Blob;
   qrData: string;
-  customValue: string;
+  customValue: string | null;
 }
 export const postQRCodeWithPhoto = async ({
   photo,
@@ -31,7 +31,7 @@ export const postQRCodeWithPhoto = async ({
 export interface PostQRCodePropsWithNft {
   qrData: string;
   imageUrl: string;
-  customValue: string;
+  customValue: string | null;
 }
 
 export const postQRCodeWithNft = async ({

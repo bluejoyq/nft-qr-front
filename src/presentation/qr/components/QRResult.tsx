@@ -18,7 +18,11 @@ export const QRResult = ({ result }: QRResultProps): ReactElement => {
     const blob = await response.blob();
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
+
+    link.download = "qr.png";
+    document.body.appendChild(link); // DOM에 링크 추가
     link.click();
+    document.body.removeChild(link); // 사용 후 링크 제거
   };
   return (
     <>

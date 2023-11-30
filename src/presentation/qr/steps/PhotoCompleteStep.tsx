@@ -14,6 +14,7 @@ const useCreatePhoto = () => {
     mutationFn: async (formData: PhotoForm) => {
       return await postQRCodeWithPhoto({
         ...formData,
+        customValue: formData.custom?.value ?? "",
       });
     },
   });
