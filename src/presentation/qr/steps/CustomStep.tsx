@@ -3,56 +3,56 @@ import { css } from "@emotion/react";
 import { Box, Option, Palette, Select, Typography } from "@mui/joy";
 import { ReactElement, useState } from "react";
 import {
-  PromptKey,
-  PromptValue,
-  promptExamplePhotos,
-  promptOptions,
-} from "../constants/Prompts";
+  CustomKey,
+  CustomValue,
+  customExamplePhotos,
+  customOptions,
+} from "../constants/Custom";
 import DrawOutlinedIcon from "@mui/icons-material/DrawOutlined";
 import { usePalette } from "@/presentation/common/hooks/usePalette";
-interface Prompt {
-  key: PromptKey;
-  value: PromptValue;
+interface Custom {
+  key: CustomKey;
+  value: CustomValue;
 }
-interface PromptStepProps {
-  stepNext: (promptKey: PromptKey, promptValue: PromptValue) => void;
-  defaultValue: Prompt | null;
+interface CustomStepProps {
+  stepNext: (customKey: CustomKey, customValue: CustomValue) => void;
+  defaultValue: Custom | null;
 }
-export const PromptStep = ({
+export const CustomStep = ({
   stepNext,
   defaultValue,
-}: PromptStepProps): ReactElement => {
+}: CustomStepProps): ReactElement => {
   const palette = usePalette();
-  const [prompt, setPrompt] = useState<Prompt | null>(defaultValue ?? null);
+  const [custom, setcustom] = useState<Custom | null>(defaultValue ?? null);
   return (
     <Box css={styles.container}>
       <Typography typography={"h3"}>Add custom</Typography>
-      <PropmtSelector
-        onChange={(newPrompt) => {
-          setPrompt(newPrompt);
+      <CustomSelector
+        onChange={(newcustom) => {
+          setcustom(newcustom);
         }}
         defaultValue={defaultValue?.key}
       />
-      {prompt == null ? (
+      {custom == null ? (
         <Box css={styles.examplePhoto(palette)}>
           <DrawOutlinedIcon />
           <Typography typography={"h3"}>No custom</Typography>
         </Box>
       ) : (
         <img
-          src={promptExamplePhotos[prompt.key]}
+          src={customExamplePhotos[custom.key]}
           css={styles.examplePhoto(palette)}
         />
       )}
       <AppButton
         onClick={() => {
-          if (prompt == null) {
+          if (custom == null) {
             return;
           }
-          stepNext(prompt.key, prompt.value);
+          stepNext(custom.key, custom.value);
         }}
         css={styles.nextButton}
-        disabled={prompt == null}
+        disabled={custom == null}
       >
         <Typography typography={"h3"}>Next</Typography>
       </AppButton>
@@ -60,11 +60,11 @@ export const PromptStep = ({
   );
 };
 
-interface PromptSelectorProps {
-  onChange: (promptKey: Prompt | null) => void;
-  defaultValue?: PromptKey;
+interface CustomSelectorProps {
+  onChange: (customKey: Custom | null) => void;
+  defaultValue?: CustomKey;
 }
-const PropmtSelector = ({ onChange, defaultValue }: PromptSelectorProps) => {
+const CustomSelector = ({ onChange, defaultValue }: CustomSelectorProps) => {
   return (
     <Select
       onChange={(_, key) => {
@@ -72,17 +72,17 @@ const PropmtSelector = ({ onChange, defaultValue }: PromptSelectorProps) => {
           onChange(null);
           return;
         }
-        const promptKey = key as PromptKey;
+        const customKey = key as CustomKey;
 
         onChange({
-          key: promptKey,
-          value: promptOptions[promptKey],
+          key: customKey,
+          value: customOptions[customKey],
         });
       }}
       defaultValue={defaultValue}
     >
       <Option value={null}>no custom</Option>
-      {Object.keys(promptOptions).map((key) => (
+      {Object.keys(customOptions).map((key) => (
         <Option value={key} key={key}>
           {key}
         </Option>

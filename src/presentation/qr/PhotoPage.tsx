@@ -5,10 +5,11 @@ import { FormProvider } from "react-hook-form";
 import { PhotoForm, usePhotoForm } from "./hooks/usePhotoForm";
 import { UploadStep } from "./steps/UploadStep";
 import { DataStep } from "./steps/DataStep";
-import { PromptStep } from "./steps/PromptStep";
-import { PromptKey, PromptValue } from "./constants/Prompts";
+import { CustomStep } from "./steps/CustomStep";
+import { CustomKey, CustomValue } from "./constants/Custom";
 import { useBlocker } from "react-router-dom";
 import { PhotoSteps } from "./constants/Steps";
+import { Typography } from "@mui/joy";
 
 const useStepMove = (
   currentStep: PhotoSteps,
@@ -20,8 +21,8 @@ const useStepMove = (
         case "Upload Photo":
           return "QR Data";
         case "QR Data":
-          return "Prompt";
-        case "Prompt":
+          return "Custom";
+        case "Custom":
           return "Complete";
         case "Complete":
           return "Complete";
@@ -37,10 +38,10 @@ const useStepMove = (
           return "Upload Photo";
         case "QR Data":
           return "Upload Photo";
-        case "Prompt":
+        case "Custom":
           return "QR Data";
         case "Complete":
-          return "Prompt";
+          return "Custom";
       }
     };
     setStep(getPrevStep());
@@ -57,7 +58,7 @@ export const PhotoPage = (): ReactElement => {
   const { handleSubmit, watch, setValue } = methods;
   const currentStep = watch("currentStep");
 
-  const promptKey = watch("promptKey");
+  const customKey = watch("customKey");
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
     setValue("currentStep", newStep);
   });
@@ -78,7 +79,7 @@ export const PhotoPage = (): ReactElement => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <AppStepper<PhotoSteps>
-          steps={["Upload Photo", "QR Data", "Prompt", "Complete"]}
+          steps={["Upload Photo", "QR Data", "Custom", "Complete"]}
           currentStep={currentStep}
           setCurrentStep={(newStep) => {
             setValue("currentStep", newStep);
@@ -102,19 +103,22 @@ export const PhotoPage = (): ReactElement => {
             defaulutValue={watch("qrData")}
           />
         )}
-        {currentStep == "Prompt" && (
-          <PromptStep
-            stepNext={(promptKey: PromptKey, promptValue: PromptValue) => {
-              setValue("promptKey", promptKey);
-              setValue("promptValue", promptValue);
+        {currentStep == "Custom" && (
+          <CustomStep
+            stepNext={(customKey: CustomKey, customValue: CustomValue) => {
+              setValue("customKey", customKey);
+              setValue("customValue", customValue);
               stepNext();
             }}
             defaultValue={
-              promptKey == null
+              customKey == null
                 ? null
-                : { key: promptKey, value: watch("promptValue") }
+                : { key: customKey, value: watch("customValue") }
             }
           />
+        )}
+        {currentStep == "Complete" && (
+          <Typography typography={"h3"}>Complete</Typography>
         )}
       </form>
     </FormProvider>

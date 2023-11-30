@@ -1,4 +1,4 @@
-export const promptOptions = {
+export const customOptions = {
   realistic: "realistic:2.0",
   anime: "anime:2.0",
   photographic: "photographic:2.0",
@@ -10,7 +10,7 @@ export const promptOptions = {
   artistic: "artistic:2.0",
 };
 
-export const promptExamplePhotos = {
+export const customExamplePhotos = {
   realistic: "realistic-example.jpg",
   anime: "anime-example.jpg",
   photographic: "photographic-example.jpg",
@@ -22,5 +22,5 @@ export const promptExamplePhotos = {
   artistic: "artistic-example.jpg",
 };
 
-export type PromptKey = keyof typeof promptOptions;
-export type PromptValue = (typeof promptOptions)[PromptKey];
+export type CustomKey = keyof typeof customOptions;
+export type CustomValue = (typeof customOptions)[CustomKey];

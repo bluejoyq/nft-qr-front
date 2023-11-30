@@ -9,8 +9,8 @@ import { NftSteps } from "./constants/Steps";
 import { NftForm, useNftForm } from "./hooks/useNftForm";
 import { useBlocker } from "react-router-dom";
 import { AppStepper } from "./components/AppStepper";
-import { PromptStep } from "./steps/PromptStep";
-import { PromptKey, PromptValue } from "./constants/Prompts";
+import { CustomStep } from "./steps/CustomStep";
+import { CustomKey, CustomValue } from "./constants/Custom";
 import { DataStep } from "./steps/DataStep";
 import { ConnectStep } from "./steps/ConnectStep";
 import { SelectNftStep } from "./steps/SelectNftStep";
@@ -27,8 +27,8 @@ const useStepMove = (
         case "Select Nft":
           return "QR Data";
         case "QR Data":
-          return "Prompt";
-        case "Prompt":
+          return "Custom";
+        case "Custom":
           return "Complete";
         case "Complete":
           return "Complete";
@@ -46,10 +46,10 @@ const useStepMove = (
           return "Get Address";
         case "QR Data":
           return "Select Nft";
-        case "Prompt":
+        case "Custom":
           return "QR Data";
         case "Complete":
-          return "Prompt";
+          return "Custom";
       }
     };
 
@@ -66,7 +66,7 @@ export const NftPage = (): ReactElement => {
   };
   const { handleSubmit, watch, setValue } = methods;
   const currentStep = watch("currentStep");
-  const promptKey = watch("promptKey");
+  const customKey = watch("customKey");
   const address = watch("address");
 
   const { stepNext, stepBack } = useStepMove(currentStep, (newStep) => {
@@ -89,7 +89,7 @@ export const NftPage = (): ReactElement => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <AppStepper<NftSteps>
-          steps={["Get Address", "Select Nft", "QR Data", "Prompt", "Complete"]}
+          steps={["Get Address", "Select Nft", "QR Data", "Custom", "Complete"]}
           currentStep={currentStep}
           setCurrentStep={(newStep) => {
             setValue("currentStep", newStep);
@@ -122,17 +122,17 @@ export const NftPage = (): ReactElement => {
             defaulutValue={watch("qrData")}
           />
         )}
-        {currentStep == "Prompt" && (
-          <PromptStep
-            stepNext={(promptKey: PromptKey, promptValue: PromptValue) => {
-              setValue("promptKey", promptKey);
-              setValue("promptValue", promptValue);
+        {currentStep == "Custom" && (
+          <CustomStep
+            stepNext={(customKey: CustomKey, customValue: CustomValue) => {
+              setValue("customKey", customKey);
+              setValue("customValue", customValue);
               stepNext();
             }}
             defaultValue={
-              promptKey == null
+              customKey == null
                 ? null
-                : { key: promptKey, value: watch("promptValue") }
+                : { key: customKey, value: watch("customValue") }
             }
           />
         )}

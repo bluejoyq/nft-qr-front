@@ -1,13 +1,13 @@
 import { PostQRCodeWithPhotoProps } from "@/data/backend";
 import { useForm, useFormContext } from "react-hook-form";
 import { PhotoSteps } from "../constants/Steps";
-import { PromptKey, PromptValue } from "../constants/Prompts";
+import { CustomKey, CustomValue } from "../constants/Custom";
 
 export interface PhotoForm extends PostQRCodeWithPhotoProps {
   currentStep: PhotoSteps;
   blob: Blob | null;
-  promptKey: PromptKey | null;
-  promptValue: PromptValue | "";
+  customKey: CustomKey | null;
+  customValue: CustomValue | "";
 }
 export const usePhotoForm = () => {
   return useForm<PhotoForm>({
@@ -15,8 +15,8 @@ export const usePhotoForm = () => {
       currentStep: "Upload Photo",
       blob: null,
       qrData: "",
-      promptValue: "",
-      promptKey: null,
+      customValue: "",
+      customKey: null,
     },
   });
 };

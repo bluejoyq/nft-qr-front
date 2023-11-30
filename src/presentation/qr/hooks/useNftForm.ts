@@ -1,13 +1,13 @@
 import { NftSteps } from "../constants/Steps";
-import { PromptKey, PromptValue } from "../constants/Prompts";
+import { CustomKey, CustomValue } from "../constants/Custom";
 import { useForm, useFormContext } from "react-hook-form";
 import { Nft } from "alchemy-sdk";
 
 export interface NftForm {
   currentStep: NftSteps;
   blob: Blob | null;
-  promptKey: PromptKey | null;
-  promptValue: PromptValue | "";
+  customKey: CustomKey | null;
+  customValue: CustomValue | "";
   nft: Nft | null;
   qrData: string;
   address: string;
@@ -18,8 +18,8 @@ export const useNftForm = () => {
       currentStep: "Get Address",
       blob: null,
       qrData: "",
-      promptValue: "",
-      promptKey: null,
+      customValue: "",
+      customKey: null,
       nft: null,
     },
   });
